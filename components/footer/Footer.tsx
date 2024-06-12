@@ -1,0 +1,60 @@
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import FacebookIcon from "@/assets/icon/facebook.png";
+import LinkedInIcon from "@/assets/icon/linkedin.png";
+import YoutubeIcon from "@/assets/icon/youtube.png";
+import InstagramIcon from "@/assets/icon/instagram.png";
+
+const Footer: React.FC = () => {
+  return (
+    <footer className="px-5 py-2.5 font-normal text-2xl">
+      <hr className="mx-auto my-0 bg-[#E6E6E6] mb-[40px]"></hr>
+      <h1 className="mb-[66px]">AN:THOLOGY</h1>
+      <ul className="flex gap-2 items-center">
+        <li>
+          <Link href="">
+            <Image
+              src={FacebookIcon}
+              className="w-10 h-10 object-contain p-2.5"
+              alt="facebook icon"
+              priority
+            />
+          </Link>
+        </li>
+        <li>
+          <Link href="">
+            <Image
+              src={LinkedInIcon}
+              className="w-10 h-10 object-contain p-1"
+              alt="linkedin icon"
+              priority
+            />
+          </Link>
+        </li>
+        <li>
+          <Link href="">
+            <Image
+              src={YoutubeIcon}
+              className="w-10 h-10 object-contain p-1"
+              alt="youtube icon"
+              priority
+            />
+          </Link>
+        </li>
+        <li>
+          <Link href="">
+            <Image
+              src={InstagramIcon}
+              className="w-10 h-10 object-contain p-1"
+              alt="instagram icon"
+              priority
+            />
+          </Link>
+        </li>
+      </ul>
+    </footer>
+  );
+};
+
+export default Footer;
