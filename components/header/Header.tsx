@@ -3,7 +3,7 @@ import React from "react";
 
 const Header: React.FC = () => {
   return (
-    <header className="flex items-center h-[160px] justify-between font-medium text-xl px-5 py-2.5">
+    <header className="flex items-center h-[164px] justify-between font-medium text-xl px-20">
       <div>
         <Link href="/">앤솔:로지</Link>
       </div>

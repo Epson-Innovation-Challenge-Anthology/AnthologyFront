@@ -8,10 +8,12 @@ import InstagramIcon from "@/assets/icon/instagram.png";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="px-5 py-2.5 font-normal text-2xl">
-      <hr className="mx-auto my-0 bg-[#E6E6E6] mb-[40px]"></hr>
-      <h1 className="mb-[66px]">AN:THOLOGY</h1>
-      <ul className="flex gap-2 items-center">
+    <footer className="px-20 font-normal text-2xl">
+      <hr className="mx-auto my-0 bg-[#E6E6E6] mb-[52px]"></hr>
+      <h1 className="mb-[88px]">
+        A<span className="text-[#8F00FF]">N</span>:THOLOGY
+      </h1>
+      <ul className="flex gap-2 items-center mb-12">
         <li>
           <Link href="">
             <Image
