@@ -19,7 +19,7 @@ const Header: React.FC = () => {
             <Link href="/my-info">나의 정보</Link>
           </li>
           <li>
-            <button className="bg-[#8f00ff] px-6 py-3.5 rounded-[10px] text-[white]">
+            <button className="btn btn-active bg-[#8f00ff] px-6 py-3.5 text-[white] border-0">
               로그인
             </button>
           </li>
