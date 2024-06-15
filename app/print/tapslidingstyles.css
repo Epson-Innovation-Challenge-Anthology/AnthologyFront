@@ -1,64 +1,73 @@
 /* styles.css */
 .button-container {
-  position: relative;
-  width: 200px;
-  height: 50px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  display: flex;
-  overflow: hidden;
+    position: relative;
+    width: 200px;
+    height: 50px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    display: flex;
+    overflow: hidden;
 }
-
+  
 .button-slide {
-  position: absolute;
-  top: 8px;
-  width: 40%;
-  height: 70%;
-  background-color: white;
-  border-radius: 8px;
-  transition: transform 0.3s ease-in-out;
+    position: absolute;
+    top: 8px;
+    width: 40%;
+    height: 70%;
+    background-color: white;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
 }
-
+  
 .button {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 1;
-  font-weight: medium;
-  font-size: 14px;
-  height: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1;
+    font-weight: medium;
+    font-size: 14px;
+    height: 100%;
 }
-.faq-question {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  cursor: pointer;
+  
+.plan-cards-container:hover .plan-card:not(:hover) {
+    transform: scale(0.99);
 }
-
+  
+.plan-card .plan-title,
+.plan-card .plan-price,
+.plan-card .plan-duration {
+    transition: color 0.3s ease;
+}
+  
+.plan-card:hover .plan-title,
+.plan-card:hover .plan-price,
+.plan-card:hover .plan-duration {
+    color: #9a1aff;
+}
+  
 .faq-answer {
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.3s ease;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
 }
-
+  
 .faq-answer.open {
-  max-height: 200px; /* 충분히 큰 값으로 설정 */
-  transition: max-height 0.3s ease;
+    max-height: 200px; /* 충분히 큰 값으로 설정 */
+    transition: max-height 0.3s ease;
 }
-
+  
 .faq-icon {
-  display: inline-block;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  transform-origin: center;
+    display: inline-block;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
 }
-
+  
 .faq-icon.open {
-  transform: rotate(180deg);
+    transform: rotate(180deg);
 }
+  
 .faq-icon.minus {
     margin-right: 3px;
-  }
+}
