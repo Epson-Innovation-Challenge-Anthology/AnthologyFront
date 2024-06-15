@@ -9,7 +9,7 @@ import Icon4 from "@/assets/about/icon4.png";
 
 const AboutPage: React.FC = () => {
   return (
-    <div className="flex flex-col items-center px-8 mt-[50px] mb-[400px]">
+    <div className="flex flex-col items-center px-8 mt-[50px] mb-[50px] box-border overflow-hidden">
       <div className="flex flex-col gap-6 items-center justify-start w-full max-w-6xl mx-auto mb-40">
         <h1 className="text-black text-center font-semibold text-6xl leading-tight">
           앤솔로지 서비스 소개
@@ -17,17 +17,15 @@ const AboutPage: React.FC = () => {
         <p className="text-purple-500 text-center font-inter text-2xl leading-loose">
           앤솔로지에서 앤솔로져 여러분만의 다양한 시간과 공간을 경험하세요
         </p>
-        <button className="bg-purple-400 rounded-md py-3 px-6 flex flex-row gap-2 items-center justify-center shadow">
-          <span className="text-white text-left font-medium text-base leading-loose">
-            Button
-          </span>
+        <button className="btn btn-active bg-[#A974FF] px-6 py-3.5 text-[white] border-0">
+          Button
         </button>
       </div>
 
-      <div className="flex flex-row items-center justify-between w-full mx-auto mb-40">
-        <div className="flex flex-col items-start justify-center w-1/2">
-          <div style={{ marginLeft: "45px" }}>
-            <h2 className="text-purple-600 text-left font-medium text-4xl leading-tight mt-[20px]">
+      <div className="flex flex-col md:flex-row items-center justify-between w-full mx-auto mb-40">
+        <div className="flex flex-col items-start justify-center w-full md:w-1/2">
+          <div className="ml-5 md:ml-11">
+            <h2 className="text-purple-600 text-left font-medium text-4xl leading-tight mt-5">
               엔솔 기상청으로 이동하기
             </h2>
             <p className="text-gray-500 text-left font-inter text-2xl leading-loose">
@@ -35,17 +33,70 @@ const AboutPage: React.FC = () => {
               <br />
               자신의 마음 날씨에 따른 사진 테마 추천을 받아보세요.
             </p>
-            <button className="bg-purple-400 rounded-md py-3 px-6 flex flex-row gap-2 items-center justify-center shadow mt-[10px]">
-              <span className="text-white text-left font-medium text-base leading-loose">
-                Button
-              </span>
+            <button className="btn btn-active bg-[#A974FF] px-6 py-3.5 text-[white] border-0">
+              Button
             </button>
           </div>
         </div>
-        <div
-          className="w-1/2 mr-[40px]"
-          style={{ width: "670px", height: "400px" }}
-        >
+        <div className="w-[675px] mr-0 md:mr-10 mt-5 md:mt-0">
+          <Image
+            src={AboutImg1}
+            alt="About Image 1"
+            layout="responsive"
+            objectFit="cover"
+            className="rounded-md"
+            width={600}
+            height={400}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col md:flex-row items-center justify-between w-full mx-auto mb-40">
+        <div className="w-[675px] ml-0 md:ml-10 mb-5 md:mb-0">
+          <Image
+            src={AboutImg2}
+            alt="About Image 2"
+            layout="responsive"
+            objectFit="cover"
+            className="rounded-md"
+            width={700}
+            height={400}
+          />
+        </div>
+        <div className="flex flex-col items-start justify-center w-full md:w-1/2">
+          <div className="ml-5 md:ml-11">
+            <h2 className="text-purple-700 text-left font-medium text-4xl leading-tight mt-5">
+              엔솔금고로 이동하기
+            </h2>
+            <p className="text-gray-500 text-left font-inter text-2xl leading-loose">
+              제작자는 일에 필요한 프린터 서비스를,
+              <br />
+              앤솔로져는 필요한 사진을 출력하는 서비스를 이용해보세요.
+            </p>
+            <button className="btn btn-active bg-[#A974FF] px-6 py-3.5 text-[white] border-0">
+              Button
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col md:flex-row items-center justify-between w-full mx-auto mb-40">
+        <div className="flex flex-col items-start justify-center w-full md:w-1/2">
+          <div className="ml-5 md:ml-11">
+            <h2 className="text-purple-600 text-left font-medium text-4xl leading-tight mt-5">
+              엔솔 궤도로 이동하기
+            </h2>
+            <p className="text-gray-500 text-left font-inter text-2xl leading-loose">
+              앤솔 궤도로 이동해서, 궤도에 있는 다른 앤솔로져들과
+              <br />
+              색다른 의미가 있는 사진을 남기고 기억을 저장해 보세요.
+            </p>
+            <button className="btn btn-active bg-[#A974FF] px-6 py-3.5 text-[white] border-0">
+              Button
+            </button>
+          </div>
+        </div>
+        <div className="w-[675px] mr-0 md:mr-10 mt-5 md:mt-0">
           <Image
             src={AboutImg1}
             alt="About Image 1"
@@ -58,11 +109,8 @@ const AboutPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex flex-row items-center justify-between w-full mx-auto mb-40">
-        <div
-          className="w-1/2 ml-[40px]"
-          style={{ width: "670px", height: "400px" }}
-        >
+      <div className="flex flex-col md:flex-row items-center justify-between w-full mx-auto mb-40">
+        <div className="w-[675px] ml-0 md:ml-10 mb-5 md:mb-0">
           <Image
             src={AboutImg2}
             alt="About Image 2"
@@ -73,97 +121,29 @@ const AboutPage: React.FC = () => {
             height={400}
           />
         </div>
-        <div className="flex flex-col items-start justify-center w-1/2">
-          <div style={{ marginLeft: "45px" }}>
-            <h2 className="text-purple-700 text-left font-medium text-4xl leading-tight mt-[20px]">
+        <div className="flex flex-col items-start justify-center w-full md:w-1/2">
+          <div className="ml-5 md:ml-11">
+            <h2 className="text-purple-700 text-left font-medium text-4xl leading-tight mt-5">
               엔솔머신으로 이동하기
             </h2>
             <p className="text-gray-500 text-left font-inter text-2xl leading-loose">
-              제작자는 일에 필요한 프린터 서비스를,
+              앤솔 머신으로 이동해 앤솔 머신에 추후에 출력하고 싶은 사진들을
               <br />
-              앤솔로져는 필요한 사진을 출력하는 서비스를 이용해보세요.
+              저장하고 본인만의 앤솔 머신을 업그레이드 시켜 보세요
             </p>
-            <button className="bg-purple-400 rounded-md py-3 px-6 flex flex-row gap-2 items-center justify-center shadow mt-[10px]">
-              <span className="text-white text-left font-medium text-base leading-loose">
-                Button
-              </span>
+            <button className="btn btn-active bg-[#A974FF] px-6 py-3.5 text-[white] border-0">
+              Button
             </button>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-row items-center justify-between w-full mx-auto mb-40">
-        <div className="flex flex-col items-start justify-center w-1/2">
-          <div style={{ marginLeft: "45px" }}>
-            <h2 className="text-purple-600 text-left font-medium text-4xl leading-tight mt-[20px]">
-              엔솔 금고로 이동하기
-            </h2>
-            <p className="text-gray-500 text-left font-inter text-2xl leading-loose">
-              A subheading for this section, as long or as short as you like
-            </p>
-            <button className="bg-purple-400 rounded-md py-3 px-6 flex flex-row gap-2 items-center justify-center shadow">
-              <span className="text-white text-left font-medium text-base leading-loose">
-                Button
-              </span>
-            </button>
-          </div>
-        </div>
-        <div
-          className="w-1/2 mr-[40px]"
-          style={{ width: "670px", height: "400px" }}
-        >
-          <Image
-            src={AboutImg1}
-            alt="About Image 1"
-            layout="responsive"
-            objectFit="cover"
-            className="rounded-md"
-            width={700}
-            height={400}
-          />
-        </div>
-      </div>
-
-      <div className="flex flex-row items-center justify-between w-full mx-auto mb-40">
-        <div
-          className="w-1/2 ml-[40px]"
-          style={{ width: "670px", height: "400px" }}
-        >
-          <Image
-            src={AboutImg2}
-            alt="About Image 2"
-            layout="responsive"
-            objectFit="cover"
-            className="rounded-md"
-            width={700}
-            height={400}
-          />
-        </div>
-        <div className="flex flex-col items-start justify-center w-1/2">
-          <div style={{ marginLeft: "45px" }}>
-            <h2 className="text-purple-700 text-left font-medium text-4xl leading-tight mt-[20px]">
-              엔솔머신으로 이동하기
-            </h2>
-            <p className="text-gray-500 text-left font-inter text-2xl leading-loose">
-              제작자는 일에 필요한 프린터 서비스를,
-              <br />
-              앤솔로져는 필요한 사진을 출력하는 서비스를 이용해보세요.
-            </p>
-            <button className="bg-purple-400 rounded-md py-3 px-6 flex flex-row gap-2 items-center justify-center shadow mt-[10px]">
-              <span className="text-white text-left font-medium text-base leading-loose">
-                Button
-              </span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <h2 className="text-purple-700 text-left font-inter text-4xl leading-tight font-semibold mt-20 w-full ml-[45px] mx-auto mb-20">
+      <h2 className="text-purple-700 text-left font-inter text-4xl leading-tight font-semibold mt-20 w-full ml-5 md:ml-11 mb-20">
         Heading
       </h2>
 
-      <div className="flex flex-row gap-12 items-start justify-between w-fulll ml-[45px] mx-auto mb-20">
-        <div className="flex flex-col gap-2 items-start justify-center w-1/2">
+      <div className="flex flex-col md:flex-row gap-12 items-start justify-between w-full ml-5 md:ml-11 mb-20">
+        <div className="flex flex-col gap-2 items-start justify-center w-full md:w-1/2">
           <div className="flex-shrink-0 w-8 h-8 relative overflow-hidden">
             <Image
               src={Icon1}
@@ -177,11 +157,12 @@ const AboutPage: React.FC = () => {
             앤솔로지에서 만든 사진을 외부에 공유하기
           </h3>
           <p className="text-gray-500 text-left font-inter text-lg leading-loose">
-            Body text for whatever you’d like to say. Add main takeaway points,
-            quotes, anecdotes, or even a very very short story.
+            자신 스스로 풍경을 찍은 사진을 앤솔로지에 있는 새로운 디자인을 입혀
+            자연스럽고 특별한 의미를 만들어보세요. 그리고 그 사진을 소셜
+            커뮤니티(블로그, 트위터, 인스타 등)에 공유해 보세요.
           </p>
         </div>
-        <div className="flex flex-col gap-2 items-start justify-center w-1/2">
+        <div className="flex flex-col gap-2 items-start justify-center w-full md:w-1/2">
           <div className="flex-shrink-0 w-8 h-8 relative overflow-hidden">
             <Image
               src={Icon2}
@@ -192,17 +173,18 @@ const AboutPage: React.FC = () => {
             />
           </div>
           <h3 className="text-black text-left font-inter text-2xl leading-loose">
-            앤솔머신 뉴스 읽기
+            앤솔머신 소식 읽기
           </h3>
           <p className="text-gray-500 text-left font-inter text-lg leading-loose">
-            Body text for whatever you’d like to suggest. Add main takeaway
-            points, quotes, anecdotes, or even a very very short story.
+            앤솔머신의 공사 변화 소식을 전달해요. 뉴스에 자신의 사건을 제보하면,
+            <br/>
+            자신의 이야기가 앤솔 데스크에 대서 특필 될 거에요.
           </p>
         </div>
       </div>
 
-      <div className="flex flex-row gap-12 items-start justify-between w-fulll ml-[45px] mx-auto mb-20">
-        <div className="flex flex-col gap-2 items-start justify-center w-1/2">
+      <div className="flex flex-col md:flex-row gap-12 items-start justify-between w-full ml-5 md:ml-11 mb-20">
+        <div className="flex flex-col gap-2 items-start justify-center w-full md:w-1/2">
           <div className="flex-shrink-0 w-8 h-8 relative overflow-hidden">
             <div className="w-6 h-7 absolute left-1 top-[2px]">
               <Image
@@ -215,15 +197,14 @@ const AboutPage: React.FC = () => {
             </div>
           </div>
           <h3 className="text-black text-left font-inter text-2xl leading-loose">
-            앤솔머신 잠금 설정하기
+            앤솔로지 캐릭터랑 게임하고 앤솔 머신 자물쇠 얻기
           </h3>
           <p className="text-gray-500 text-left font-inter text-lg leading-loose">
-            Body text for whatever you’d like to claim. Add main takeaway
-            points, quotes, anecdotes, or even a very very short story.
+            유일한 현질 요소로 사용
           </p>
         </div>
 
-        <div className="flex flex-col gap-2 items-start justify-center w-1/2">
+        <div className="flex flex-col gap-2 items-start justify-center w-full md:w-1/2">
           <div className="flex-shrink-0 w-8 h-8 relative overflow-hidden">
             <Image
               src={Icon4}
@@ -234,11 +215,10 @@ const AboutPage: React.FC = () => {
             />
           </div>
           <h3 className="text-black text-left font-inter text-2xl leading-loose">
-            앤솔머신을 해제하는 날짜 체크하기
+            앤솔머신을 해제하는 달력 꾸미기
           </h3>
           <p className="text-gray-500 text-left font-inter text-lg leading-loose">
-            Body text for whatever you’d like to type. Add main takeaway points,
-            quotes, anecdotes, or even a very very short story.
+            달력은 오프라인으로 생산 가능하며 본인이 필요할 시에 목적에 따라서,
           </p>
         </div>
       </div>
