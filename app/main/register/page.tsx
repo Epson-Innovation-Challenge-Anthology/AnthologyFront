@@ -4,10 +4,15 @@ import Image from "next/image";
 import GoogleIcon from "@/assets/icon/google.png";
 import { FieldValues, useForm } from "react-hook-form";
 import { useGoogleLogin } from "@react-oauth/google";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data: FieldValues) => {};
+  const router = useRouter();
+
+  const onSubmit = (data: FieldValues) => {
+    router.push(`/main/register/step/?email=${data.email}`);
+  };
 
   const googleRegister = useGoogleLogin({
     onSuccess: (res) => {},
