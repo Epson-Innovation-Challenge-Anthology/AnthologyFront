@@ -3,17 +3,25 @@
 import Image from "next/image";
 import GoogleIcon from "@/assets/icon/google.png";
 import { FieldValues, useForm } from "react-hook-form";
+import { useGoogleLogin } from "@react-oauth/google";
 
 export default function Register() {
   const { register, handleSubmit } = useForm();
   const onSubmit = (data: FieldValues) => {};
 
+  const googleRegister = useGoogleLogin({
+    onSuccess: (res) => {},
+  });
+
   return (
     <main className="px-20">
       <section className="mt-20">
-        <h1 className="font-bold text-[64px]">
-          <span className="text-[#8F00FF]">A</span>bout
+        <h1 className="font-bold text-[64px] text-[#8F00FF]">
+          앤솔로지 서비스에 오신 것을 환영합니다
         </h1>
+        <p className="mt-20 font-medium text-xl">
+          앤솔로지를 통해서 일상에서 잊혀지지 않는 기억을 공유하고 남겨보세요.
+        </p>
       </section>
       <form
         className="mt-[100px] flex flex-col items-center w-[392px]"
@@ -26,7 +34,7 @@ export default function Register() {
           Enter your email to sign up for this app
         </h2>
         <input
-          type="email"
+          type="text"
           placeholder="email@domain.com"
           className="input input-bordered w-[327px] h-10 max-w-xs mt-4"
           {...register("email")}
@@ -37,7 +45,10 @@ export default function Register() {
         <div className="divider text-[#828282] mt-6 mb-0 w-[327px] ml-8">
           or continue with
         </div>
-        <button className="btn btn-active mt-6 w-[327px] h-10 bg-[#EEEEEE] border-0">
+        <button
+          className="btn btn-active mt-6 w-[327px] h-10 bg-[#EEEEEE] border-0"
+          onClick={() => googleRegister()}
+        >
           <Image
             src={GoogleIcon}
             className="w-5 h-5 object-contain"
