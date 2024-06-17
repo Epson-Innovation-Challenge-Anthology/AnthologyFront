@@ -19,8 +19,8 @@ export default function Register() {
   });
 
   return (
-    <main className="px-20">
-      <section className="mt-20">
+    <main className="px-20 pt-20 pb-[84px]">
+      <section>
         <h2 className="font-bold text-[64px] text-[#8F00FF]">
           앤솔로지 서비스에 오신 것을 환영합니다
         </h2>
@@ -63,7 +63,7 @@ export default function Register() {
             />
             Google
           </button>
-          <p className="mt-6 text-[#828282] text-center">
+          <p className="mt-6 text-[#828282] text-center mb-[64px]">
             By clicking continue, you agree to our
             <span className="text-[black]"> Terms of Service</span> and
             <span className="text-[black]"> Privacy Policy</span>

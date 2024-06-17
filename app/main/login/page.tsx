@@ -16,7 +16,7 @@ export default function Login() {
   const onSubmit = (data: FieldValues) => {};
 
   return (
-    <main className="flex justify-between px-20">
+    <main className="flex justify-between px-20 pt-[52px] pb-[74px]">
       <section>
         <figure></figure>
       </section>
