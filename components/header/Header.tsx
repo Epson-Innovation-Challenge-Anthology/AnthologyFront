@@ -1,27 +1,26 @@
-import Link from "next/link";
 import React from "react";
+import HeaderLink from "./HeaderLink";
+import HeaderLoginButton from "./HeaderLoginButton";
 
 const Header: React.FC = () => {
   return (
-    <header className="flex items-center h-[164px] justify-between font-medium text-xl px-20">
+    <header className="flex items-center h-[164px] justify-between font-medium text-xl px-20 bg-[#C5B6DD] text-[#8600EF]">
       <div>
-        <Link href="/">앤솔:로지</Link>
+        <HeaderLink href="/">앤솔:로지</HeaderLink>
       </div>
       <nav>
         <ul className="flex items-center gap-12">
           <li>
-            <Link href="/machine">앤솔머신</Link>
+            <HeaderLink href="/machine">앤솔머신</HeaderLink>
           </li>
           <li>
-            <Link href="/my-drawer">나의 서랍장</Link>
+            <HeaderLink href="/my-drawer">나의 서랍장</HeaderLink>
           </li>
           <li>
-            <Link href="/my-info">나의 정보</Link>
+            <HeaderLink href="/my-info">나의 정보</HeaderLink>
           </li>
           <li>
-            <button className="btn btn-active bg-[#8f00ff] px-6 py-3.5 text-[white] border-0">
-              로그인
-            </button>
+            <HeaderLoginButton />
           </li>
         </ul>
       </nav>
