@@ -1,5 +1,6 @@
 import Header from "@/components/header/Header";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { Suspense } from "react";
 
 export default function MainLayout({
   children,
@@ -12,7 +13,7 @@ export default function MainLayout({
     <>
       <GoogleOAuthProvider clientId={googleClientId}>
         <Header />
-        {children}
+        <Suspense>{children}</Suspense>
       </GoogleOAuthProvider>
     </>
   );

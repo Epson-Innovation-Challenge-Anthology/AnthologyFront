@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import GoogleIcon from "@/assets/icon/google.png";
+import GoogleIcon from "@/assets/icon/Google.png";
 import { FieldValues, useForm } from "react-hook-form";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useRouter } from "next/navigation";
