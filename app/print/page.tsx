@@ -22,7 +22,7 @@ const PrintPage: React.FC = () => {
     <div className="bg-white relative overflow-hidden">
       {/* 사진 출력 관련 섹션 */}
       <section className="flex flex-col items-center justify-start my-12">
-        <h1 className="text-black text-center font-semibold text-6xl leading-tight">
+        <h1 className="text-black text-center font-semibold text-5xl leading-tight">
           앤솔머신 사진 출력하기
         </h1>
         <p className="text-gray-500 text-center text-2xl leading-loose mt-2">
@@ -87,7 +87,7 @@ const PrintPage: React.FC = () => {
                 Feature
               </p>
             </div>
-            <button className="btn bg-[#a974ff] px-6 py-3.5 text-white w-full">
+            <button className="btn bg-[#AE76CC] px-6 py-3.5 text-white w-full">
               <span className="text-white text-sm font-medium">Select</span>
             </button>
           </div>
@@ -121,7 +121,7 @@ const PrintPage: React.FC = () => {
                 Feature
               </p>
             </div>
-            <button className="btn bg-[#a974ff] px-6 py-3.5 text-white w-full">
+            <button className="btn bg-[#AE76CC] px-6 py-3.5 text-white w-full">
               <span className="text-white text-sm font-medium">Select</span>
             </button>
           </div>
@@ -155,7 +155,7 @@ const PrintPage: React.FC = () => {
                 Feature
               </p>
             </div>
-            <button className="btn bg-[#a974ff] px-6 py-3.5 text-white w-full">
+            <button className="btn bg-[#AE76CC] px-6 py-3.5 text-white w-full">
               <span className="text-white text-sm font-medium">Select</span>
             </button>
           </div>
@@ -164,7 +164,7 @@ const PrintPage: React.FC = () => {
 
       {/* 자주 묻는 질문 섹션 */}
       <section className="faq-section flex flex-col gap-8 my-32 mx-auto w-full max-w-screen-xl">
-        <h2 className="faq-title text-black text-left font-semibold text-5xl leading-tight w-full">
+        <h2 className="faq-title text-black text-left font-semibold text-3xl leading-tight w-full">
           무엇이든 물어보세요
         </h2>
         <div className="faq-container flex flex-col gap-6 w-full">
@@ -211,7 +211,7 @@ const PrintPage: React.FC = () => {
       </section>
 
       {/* 친구 찾기 섹션 */}
-      <section className="bg-gray-100 py-24 flex flex-col gap-6 items-center justify-start w-full my-96">
+      <section className="bg-[#FFDDDD] py-24 flex flex-col gap-6 items-center justify-start w-full my-96">
         <div className="flex flex-col gap-6 items-center justify-start w-3/4">
           <h2 className="text-black text-center font-semibold text-5xl leading-tight w-full">
             앤솔 궤도에서 친구 찾기
@@ -219,7 +219,7 @@ const PrintPage: React.FC = () => {
           <p className="text-gray-500 text-center text-xl leading-loose w-full">
             Plus a subheading for your site’s footer
           </p>
-          <button className="btn bg-[#a974ff] px-6 py-3.5 text-white">
+          <button className="btn bg-[#AE76CC] px-6 py-3.5 text-white">
             button
           </button>
         </div>
