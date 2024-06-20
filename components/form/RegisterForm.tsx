@@ -4,12 +4,23 @@ import { FieldValues, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import GoogleLoginButton from "../button/GoogleLoginButton";
 import axios from "axios";
+import { validateEmail } from "@/util/validateInput";
+import { useModalStore } from "@/stores/modalStore";
 
 const RegisterForm: React.FC = () => {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
+  const { openModal } = useModalStore();
 
   const onSubmit = (data: FieldValues) => {
+    if (!data.email || !validateEmail(data.email)) {
+      openModal({
+        title: "입력오류",
+        text: "이메일을 올바르게 입력해주세요.",
+      });
+      document.getElementById("check_modal")?.click();
+      return;
+    }
     router.push(`/main/register/step/?email=${data.email}`);
   };
 

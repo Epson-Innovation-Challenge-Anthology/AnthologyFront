@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useModalStore } from "@/stores/modalStore";
-import CheckModal from "../modal/CheckModal";
+import { validateEmail, validatePassword } from "@/util/validateInput";
 
 const LoginForm: React.FC = () => {
   const { register, handleSubmit } = useForm();
@@ -35,7 +35,16 @@ const LoginForm: React.FC = () => {
     if (!data.email || !data.password) {
       openModal({
         title: "입력오류",
-        text: "이메일과 비밀번호를 입력해주세요",
+        text: "모든 항목을 입력해주세요.",
+      });
+      document.getElementById("check_modal")?.click();
+      return;
+    }
+
+    if (!validateEmail(data.email) || !validatePassword(data.password)) {
+      openModal({
+        title: "입력오류",
+        text: "형식이 올바르지 않습니다. 비밀번호는 8자 이상이어야 합니다.",
       });
       document.getElementById("check_modal")?.click();
       return;

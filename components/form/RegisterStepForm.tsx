@@ -4,16 +4,54 @@ import { FieldValues, useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { validatePassword, validatePhoneNumber } from "@/util/validateInput";
+import { useModalStore } from "@/stores/modalStore";
 
 const RegisterStepForm: React.FC = () => {
   const { register, handleSubmit } = useForm();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { openModal } = useModalStore();
 
   const email = searchParams.get("email");
 
   const onSubmit = async (data: FieldValues) => {
-    if (!email) return;
+    if (email == null) {
+      router.push("/main/register");
+      return;
+    }
+    if (data.check !== true) {
+      openModal({
+        title: "입력오류",
+        text: "약관에 동의해주세요.",
+      });
+      document.getElementById("check_modal")?.click();
+      return;
+    }
+    if (!data.name || !data.phone || !data.password || !data.confirm) {
+      openModal({
+        title: "입력오류",
+        text: "모든 항목을 입력해주세요.",
+      });
+      document.getElementById("check_modal")?.click();
+      return;
+    }
+    if (data.password !== data.confirm) {
+      openModal({
+        title: "입력오류",
+        text: "비밀번호가 일치하지 않습니다.",
+      });
+      document.getElementById("check_modal")?.click();
+      return;
+    }
+    if (!validatePassword(data.password) || !validatePhoneNumber(data.phone)) {
+      openModal({
+        title: "입력오류",
+        text: "형식이 올바르지 않습니다. 비밀번호는 8자 이상이어야하고 전화번호는 000-0000-0000 형식이어야 합니다.",
+      });
+      document.getElementById("check_modal")?.click();
+      return;
+    }
 
     const request: LocalSignupRequest = {
       email: email,
@@ -98,3 +136,6 @@ const RegisterStepForm: React.FC = () => {
 };
 
 export default RegisterStepForm;
+function openModal(arg0: { title: string; text: string }) {
+  throw new Error("Function not implemented.");
+}
