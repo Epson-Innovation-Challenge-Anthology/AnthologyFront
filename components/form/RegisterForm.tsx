@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import GoogleIcon from "@/assets/icon/Google.png";
 import { FieldValues, useForm } from "react-hook-form";
-import { useGoogleLogin } from "@react-oauth/google";
 import { useRouter } from "next/navigation";
+import GoogleLoginButton from "../button/GoogleLoginButton";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const RegisterForm: React.FC = () => {
   const { register, handleSubmit } = useForm();
@@ -14,9 +14,14 @@ const RegisterForm: React.FC = () => {
     router.push(`/main/register/step/?email=${data.email}`);
   };
 
-  const googleRegister = useGoogleLogin({
-    onSuccess: (res) => {},
-  });
+  const googleRegister = async (credential: string | undefined) => {
+    const request = {
+      id_token: credential,
+    } as GoogleLoginRequest;
+    const response = await axios.post("/auth/google/token/signin", request);
+    if (response.status !== 200) return;
+    router.push("/main/login");
+  };
 
   return (
     <section className="mt-[100px] w-[392px]">
@@ -36,24 +41,17 @@ const RegisterForm: React.FC = () => {
           className="input input-bordered w-[327px] h-10 max-w-xs mt-4"
           {...register("email")}
         />
-        <button className="btn btn-active bg-[#8f00ff] text-[white] mt-4 w-[327px] h-10 border-0">
+        <button
+          type="submit"
+          className="btn btn-active bg-[#8f00ff] text-[white] mt-4 w-[327px] h-10 border-0"
+        >
           Sign up with email
         </button>
         <div className="divider text-[#828282] mt-6 mb-0 w-[327px] ml-8">
           or continue with
         </div>
-        <button
-          className="btn btn-active mt-6 w-[327px] h-10 bg-[#EEEEEE] border-0"
-          onClick={() => googleRegister()}
-        >
-          <Image
-            src={GoogleIcon}
-            className="w-5 h-5 object-contain"
-            alt="google icon"
-            priority
-          />
-          Google
-        </button>
+        <GoogleLoginButton clickHandler={googleRegister} />
+
         <p className="mt-6 text-[#828282] text-center mb-[64px]">
           By clicking continue, you agree to our
           <span className="text-[black]"> Terms of Service</span> and

@@ -9,6 +9,14 @@ const nextConfig = {
             },
         ];
     },
+    async rewrites() {
+        return [
+            {
+                source: '/:path*',
+                destination: 'https://palm.fly.dev/:path*'
+            }
+        ]
+    }
 };
 
 export default nextConfig;

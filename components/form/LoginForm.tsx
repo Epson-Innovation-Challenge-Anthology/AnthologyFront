@@ -1,18 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import GoogleIcon from "@/assets/icon/Google.png";
-import Image from "next/image";
-import { useGoogleLogin } from "@react-oauth/google";
 import { FieldValues, useForm } from "react-hook-form";
+import GoogleLoginButton from "../button/GoogleLoginButton";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const LoginForm: React.FC = () => {
   const { register, handleSubmit } = useForm();
+  const router = useRouter();
 
-  const googleRegister = useGoogleLogin({
-    onSuccess: (res) => {},
-  });
-
+  const googleLogin = async (credential: string | undefined) => {
+    const request = {
+      id_token: credential,
+    } as GoogleLoginRequest;
+    const response = await axios.post("/auth/google/token/signin", request);
+    if (response.status !== 200) return;
+    const data = response.data as GoogleLoginResponse;
+    Cookies.set("accessToken", data.access_token);
+    Cookies.set("refreshToken", data.refresh_token);
+    router.push("/about");
+  };
   const onSubmit = (data: FieldValues) => {};
 
   return (
@@ -46,18 +55,7 @@ const LoginForm: React.FC = () => {
           이메일로 로그인하기
         </button>
         <div className="divider mt-[24px] text-[#828282]">or continue with</div>
-        <button
-          className="btn btn-active mt-[24px] w-[327px] h-10 bg-[#EEEEEE] border-0"
-          onClick={() => googleRegister()}
-        >
-          <Image
-            src={GoogleIcon}
-            className="w-5 h-5 object-contain"
-            alt="google icon"
-            priority
-          />
-          Google
-        </button>
+        <GoogleLoginButton clickHandler={googleLogin} />
         <p className="mt-[24px] text-[#828282] text-center mb-[170px]">
           By clicking continue, you agree to our
           <span className="text-[black]"> Terms of Service</span> and
