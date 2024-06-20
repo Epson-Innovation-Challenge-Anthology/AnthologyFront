@@ -24,10 +24,11 @@ clientAxios.interceptors.response.use(
       const refreshToken = Cookies.get('refreshToken')
       if(refreshToken){
         try {
-          const response = await axios.post('/auth/refresh', {
+          const request: RefreshTokenRequest = {
             grant_type: 'refresh_token',
             refresh_token: refreshToken
-          })
+          }
+          const response = await axios.post('/auth/refresh', request)
           const { access_token : newAccessToken } = response.data;
           Cookies.set('accessToken', newAccessToken)
           error.config.headers.setAuthorization(`Bearer ${newAccessToken}`)

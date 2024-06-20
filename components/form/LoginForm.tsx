@@ -12,24 +12,46 @@ const LoginForm: React.FC = () => {
   const router = useRouter();
 
   const googleLogin = async (credential: string | undefined) => {
-    const request = {
+    if (!credential) return;
+
+    const request: GoogleLoginRequest = {
       id_token: credential,
-    } as GoogleLoginRequest;
-    const response = await axios.post("/auth/google/token/signin", request);
+    };
+    const response = await axios.post<GoogleLoginResponse>(
+      "/auth/google/token/signin",
+      request
+    );
     if (response.status !== 200) return;
-    const data = response.data as GoogleLoginResponse;
-    Cookies.set("accessToken", data.access_token);
-    Cookies.set("refreshToken", data.refresh_token);
+    const { access_token, refresh_token } = response.data;
+    Cookies.set("accessToken", access_token);
+    Cookies.set("refreshToken", refresh_token);
     router.push("/about");
   };
-  const onSubmit = (data: FieldValues) => {};
+
+  const onSubmit = async (data: FieldValues) => {
+    const request: LocalSigninRequest = {
+      email: data.email,
+      password: data.password,
+    };
+    const response = await axios<LocalSigninResponse>({
+      method: "POST",
+      url: "/auth/basic/signin",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      data: request,
+    });
+    if (response.status !== 200) return;
+    const { access_token, refresh_token } = response.data;
+    Cookies.set("accessToken", access_token);
+    Cookies.set("refreshToken", refresh_token);
+    router.push("/about");
+  };
 
   return (
-    <section
-      className="w-[476px] bg-[#CEBCEC] px-[42px]"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <form className="flex flex-col items-center">
+    <section className="w-[476px] bg-[#CEBCEC] px-[42px]">
+      <form
+        className="flex flex-col items-center"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <h2 className="font-semibold text-[25px] text-[#8F00FF] mt-[143px]">
           Login in to Anthology
         </h2>

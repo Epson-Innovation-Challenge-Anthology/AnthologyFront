@@ -2,14 +2,29 @@
 
 import { FieldValues, useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const RegisterStepForm: React.FC = () => {
   const { register, handleSubmit } = useForm();
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const email = searchParams.get("email");
 
-  const onSubmit = (data: FieldValues) => {};
+  const onSubmit = async (data: FieldValues) => {
+    if (!email) return;
+
+    const request: LocalSignupRequest = {
+      email: email,
+      name: data.name,
+      phone_number: data.phone,
+      password: data.password,
+    };
+    const response = await axios.post("/auth/basic/signup", request);
+    if (response.status !== 200) return;
+    router.push("/main/login");
+  };
 
   return (
     <section className="w-[476px] bg-[#CEBCEC]">

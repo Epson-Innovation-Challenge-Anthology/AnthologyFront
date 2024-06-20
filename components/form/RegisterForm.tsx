@@ -4,7 +4,6 @@ import { FieldValues, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import GoogleLoginButton from "../button/GoogleLoginButton";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 const RegisterForm: React.FC = () => {
   const { register, handleSubmit } = useForm();
@@ -15,9 +14,11 @@ const RegisterForm: React.FC = () => {
   };
 
   const googleRegister = async (credential: string | undefined) => {
-    const request = {
+    if (!credential) return;
+
+    const request: GoogleLoginRequest = {
       id_token: credential,
-    } as GoogleLoginRequest;
+    };
     const response = await axios.post("/auth/google/token/signin", request);
     if (response.status !== 200) return;
     router.push("/main/login");
