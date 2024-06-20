@@ -1,22 +1,21 @@
+"use client";
+
 import "./globals.css";
 import Footer from "@/components/footer/Footer";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import CheckModal from "@/components/modal/CheckModal";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const googleClientId = process.env.GOOGLE_CLIENT_ID || "";
-
   return (
     <html lang="en">
+      <CheckModal />
       <body>
         <div className="h-full flex flex-col">
-          <GoogleOAuthProvider clientId={googleClientId}>
-            <div className="flex-1">{children}</div>
-            <Footer />
-          </GoogleOAuthProvider>
+          <div className="flex-1">{children}</div>
+          <Footer />
         </div>
       </body>
     </html>

@@ -6,10 +6,13 @@ import GoogleLoginButton from "../button/GoogleLoginButton";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useModalStore } from "@/stores/modalStore";
+import CheckModal from "../modal/CheckModal";
 
 const LoginForm: React.FC = () => {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
+  const { openModal } = useModalStore();
 
   const googleLogin = async (credential: string | undefined) => {
     if (!credential) return;
@@ -29,6 +32,15 @@ const LoginForm: React.FC = () => {
   };
 
   const onSubmit = async (data: FieldValues) => {
+    if (!data.email || !data.password) {
+      openModal({
+        title: "입력오류",
+        text: "이메일과 비밀번호를 입력해주세요",
+      });
+      document.getElementById("check_modal")?.click();
+      return;
+    }
+
     const request: LocalSigninRequest = {
       email: data.email,
       password: data.password,
@@ -39,7 +51,16 @@ const LoginForm: React.FC = () => {
       headers: { "content-type": "application/x-www-form-urlencoded" },
       data: request,
     });
-    if (response.status !== 200) return;
+
+    if (response.status !== 200) {
+      openModal({
+        title: "로그인 오류",
+        text: "이메일이나 비밀번호가 틀렸습니다",
+      });
+      document.getElementById("check_modal")?.click();
+      return;
+    }
+
     const { access_token, refresh_token } = response.data;
     Cookies.set("accessToken", access_token);
     Cookies.set("refreshToken", refresh_token);

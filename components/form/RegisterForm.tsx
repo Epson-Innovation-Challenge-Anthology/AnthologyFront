@@ -64,3 +64,6 @@ const RegisterForm: React.FC = () => {
 };
 
 export default RegisterForm;
+function openModal(arg0: { title: string; text: string }) {
+  throw new Error("Function not implemented.");
+}
