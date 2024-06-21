@@ -17,7 +17,7 @@ const Header: React.FC = () => {
             <HeaderLink href="/my-drawer">나의 서랍장</HeaderLink>
           </li>
           <li>
-            <HeaderLink href="/my-info">나의 정보</HeaderLink>
+            <HeaderLink href="/main/my-page">나의 정보</HeaderLink>
           </li>
           <li>
             <HeaderLoginButton />
