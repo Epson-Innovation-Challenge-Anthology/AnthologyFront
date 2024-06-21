@@ -30,9 +30,16 @@ const RegisterForm: React.FC = () => {
     const request: GoogleLoginRequest = {
       id_token: credential,
     };
-    const response = await axios.post("/auth/google/token/signin", request);
-    if (response.status !== 200) return;
-    router.push("/main/login");
+    try {
+      await axios.post("/auth/google/token/signin", request);
+      router.push("/main/login");
+    } catch (error) {
+      openModal({
+        title: "로그인 오류",
+        text: "구글 로그인에 실패했습니다.",
+      });
+      document.getElementById("check_modal")?.click();
+    }
   };
 
   return (

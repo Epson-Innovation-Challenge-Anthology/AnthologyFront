@@ -20,15 +20,22 @@ const LoginForm: React.FC = () => {
     const request: GoogleLoginRequest = {
       id_token: credential,
     };
-    const response = await axios.post<GoogleLoginResponse>(
-      "/auth/google/token/signin",
-      request
-    );
-    if (response.status !== 200) return;
-    const { access_token, refresh_token } = response.data;
-    Cookies.set("accessToken", access_token);
-    Cookies.set("refreshToken", refresh_token);
-    router.push("/about");
+    try {
+      const response = await axios.post<GoogleLoginResponse>(
+        "/auth/google/token/signin",
+        request
+      );
+      const { access_token, refresh_token } = response.data;
+      Cookies.set("accessToken", access_token);
+      Cookies.set("refreshToken", refresh_token);
+      router.push("/about");
+    } catch (error) {
+      openModal({
+        title: "로그인 오류",
+        text: "구글 로그인에 실패했습니다.",
+      });
+      document.getElementById("check_modal")?.click();
+    }
   };
 
   const onSubmit = async (data: FieldValues) => {
@@ -54,26 +61,25 @@ const LoginForm: React.FC = () => {
       email: data.email,
       password: data.password,
     };
-    const response = await axios<LocalSigninResponse>({
-      method: "POST",
-      url: "/auth/basic/signin",
-      headers: { "content-type": "application/x-www-form-urlencoded" },
-      data: request,
-    });
+    try {
+      const response = await axios<LocalSigninResponse>({
+        method: "POST",
+        url: "/auth/basic/signin",
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        data: request,
+      });
 
-    if (response.status !== 200) {
+      const { access_token, refresh_token } = response.data;
+      Cookies.set("accessToken", access_token);
+      Cookies.set("refreshToken", refresh_token);
+      router.push("/about");
+    } catch (error) {
       openModal({
         title: "로그인 오류",
         text: "이메일이나 비밀번호가 틀렸습니다",
       });
       document.getElementById("check_modal")?.click();
-      return;
     }
-
-    const { access_token, refresh_token } = response.data;
-    Cookies.set("accessToken", access_token);
-    Cookies.set("refreshToken", refresh_token);
-    router.push("/about");
   };
 
   return (
