@@ -49,17 +49,17 @@ export default function Machine() {
         <h1 className="text-6xl font-semibold text-[#AE76CC]">
           앤솔머신에 넣을 촬영 테마 고르기
         </h1>
-        <p className="text-xl text-gray-500 mt-4">
+        <p className="text-xl text-gray-500 my-4">
           앤솔머신에 넣을 오늘의 촬영 주제를 정해주세요.
         </p>
         <Link href="/about" passHref>
-          <button className="bg-[#AE76CC] text-white mt-4 px-6 py-3 rounded-md shadow">
+          <button className="btn btn-active bg-[#A974FF] font-medium px-6 py-3.5 text-[white] border-0">
             서비스 소개페이지로 돌아기기
           </button>
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-[180px] mb-[500px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-[100px] mb-[500px]">
         {themes.map((theme, index) => (
           <div key={index} className="flex flex-col items-start space-y-6">
             <div className="w-full h-48 relative mt-[100px]">
@@ -76,7 +76,9 @@ export default function Machine() {
               <p className="text-gray-500 mt-2">{theme.description}</p>
               <Link href="/machine/photo" passHref legacyBehavior>
                 <a className="text-black mt-2 flex items-center space-x-2 group">
-                  <span className="group-hover:underline">해당 테마로 이동</span>
+                  <span className="group-hover:underline">
+                    해당 테마로 이동
+                  </span>
                   <span>&gt;</span>
                 </a>
               </Link>
