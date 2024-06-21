@@ -16,7 +16,15 @@ const nextConfig = {
                 destination: 'https://palm.fly.dev/:path*'
             }
         ]
-    }
+    },
+    images: {
+        remotePatterns: [
+          {
+            protocol: 'https',
+            hostname: 'palm-dev.d3fau1t.net',
+          },
+        ],
+      },
 };
 
 export default nextConfig;
