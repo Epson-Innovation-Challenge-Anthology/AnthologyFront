@@ -1,3 +1,5 @@
+"use client";
+
 import axios from "axios";
 import Cookies from 'js-cookie';
 
@@ -29,7 +31,7 @@ clientAxios.interceptors.response.use(
             refresh_token: refreshToken
           }
           const response = await axios.post('/auth/refresh', request)
-          const { access_token : newAccessToken } = response.data;
+          const { access_token : newAccessToken } = response.data.data;
           Cookies.set('accessToken', newAccessToken)
           error.config.headers.setAuthorization(`Bearer ${newAccessToken}`)
           return clientAxios(error.config)

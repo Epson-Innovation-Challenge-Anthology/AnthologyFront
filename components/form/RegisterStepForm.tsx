@@ -59,8 +59,7 @@ const RegisterStepForm: React.FC = () => {
       phone_number: data.phone,
       password: data.password,
     };
-    const response = await axios.post("/auth/basic/signup", request);
-    if (response.status !== 200) return;
+    await axios.post("/auth/basic/signup", request);
     router.push("/main/login");
   };
 
