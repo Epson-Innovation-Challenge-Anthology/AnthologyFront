@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "./tapslidingstyles.css"; // styles.css 파일을 import 합니다.
 
-const PrintPage: React.FC = () => {
+const PricingPage: React.FC = () => {
   const [activePlan, setActivePlan] = useState<string>("monthly");
   const [openFAQ, setOpenFAQ] = useState<boolean[]>([false, false, false]);
 
@@ -228,4 +228,4 @@ const PrintPage: React.FC = () => {
   );
 };
 
-export default PrintPage;
+export default PricingPage;
