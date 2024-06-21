@@ -43,7 +43,7 @@ const RegisterForm: React.FC = () => {
   };
 
   return (
-    <section className="mt-[100px] w-[392px]">
+    <section className="mt-[351px] w-[392px]">
       <form
         className="flex flex-col items-center"
         onSubmit={handleSubmit(onSubmit)}
