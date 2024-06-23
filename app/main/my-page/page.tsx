@@ -1,59 +1,69 @@
 "use client";
 
-import axios from "@/api/clientAxios";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import PlusIcon from "@/assets/icon/plus.png";
 import { validateImage } from "@/util/validateInput";
-import { useModalStore } from "@/stores/modalStore";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEY } from "@/constant/queryKey";
+import {
+  getProfile,
+  updateProfile,
+  updateProfileImage,
+} from "@/api/profile/profileAPI";
+import { useOpenModal } from "@/hooks/useOpenModal";
+import { uploadFile } from "@/api/file/fileAPI";
 
 export default function MyPage() {
   const { register, handleSubmit } = useForm();
+  const queryClient = useQueryClient();
+  const { handleOpenModal } = useOpenModal();
+
   const [data, setData] = useState<MyInfoResponse | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [inputs, setInputs] = useState([{ id: 0, url: "" }]);
-  const { openModal } = useModalStore();
+
+  const { data: responseData, isLoading } = useQuery({
+    queryKey: [QUERY_KEY.Profile],
+    queryFn: getProfile,
+  });
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: updateProfile,
+    onSuccess: () => {
+      queryClient.invalidateQueries();
+    },
+  });
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await axios.get("/api/users/me");
-      const data: MyInfoResponse = response.data.data;
-      setData(data);
-      setProfileImage(data.profile_image);
-      if (data.urls.length > 0) {
-        setInputs(data.urls.map((url, index) => ({ id: index, url: url })));
+    if (responseData) {
+      setData(responseData);
+      setProfileImage(responseData.profile_image);
+      if (responseData.urls.length > 0) {
+        setInputs(
+          responseData.urls.map((url, index) => ({ id: index, url: url }))
+        );
       }
     }
-    fetchData();
-  }, []);
+  }, [responseData]);
 
   const handleFileChange = async (event: any) => {
     const file = event.target.files[0];
     if (!validateImage(file)) {
-      openModal({
-        title: "입력오류",
-        text: "이미지를 업로드하세요.",
-      });
-      document.getElementById("check_modal")?.click();
+      handleOpenModal({ title: "입력오류", text: "이미지를 업로드하세요." });
       return;
     }
-    const response = await axios({
-      method: "POST",
-      url: "/api/resources/picture",
-      data: { file },
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    const data: FileUploadResponse = response.data.data;
+
+    const data: FileUploadResponse = await uploadFile(file);
     const newProfileImage = data.image_url;
     setProfileImage(newProfileImage);
 
-    axios.patch("/api/users/me/profile-image", {
+    const request: updateProfileImageRequest = {
       profile_image: newProfileImage,
-    });
+    };
+    updateProfileImage(request);
   };
 
   const uploadImage = () => {
@@ -75,25 +85,27 @@ export default function MyPage() {
 
   const onSubmit = async (field: FieldValues) => {
     const urls = inputs.filter((input) => input.url).map((input) => input.url);
-    if (!data || !data.id || !field.name || !field.email) {
-      openModal({
-        title: "입력오류",
-        text: "모든 항목을 입력해주세요.",
-      });
-      document.getElementById("check_modal")?.click();
-      console.log(data);
-      console.log(field.name + field.email);
+    if (!data) return;
+    if (!field.bio) {
+      handleOpenModal({ title: "입력오류", text: "모든 항목을 입력해주세요." });
       return;
     }
 
     const request: UpdateProfileRequest = {
       id: data.id,
-      name: field.name,
-      service_email: field.email,
+      name: field.name ? field.name : data.name,
+      service_email: field.email ? field.email : data.email,
       urls: urls,
     };
-    await axios.patch("/api/users/me", request);
+    mutate(request);
   };
+
+  if (isLoading || isPending)
+    return (
+      <main className="flex justify-center items-center h-screen">
+        <span className="loading loading-spinner loading-lg"></span>
+      </main>
+    );
 
   return (
     <main className="mx-auto mt-[72px] w-[613px] mb-[94px]">
@@ -133,7 +145,7 @@ export default function MyPage() {
         <input
           type="text"
           id="name"
-          value={(data && data.name) || ""}
+          defaultValue={(data && data.name) || ""}
           className="input input-bordered w-[613px] h-[40px] mt-2 mb-[31px]"
           {...register("name")}
         />
@@ -141,7 +153,7 @@ export default function MyPage() {
         <input
           type="email"
           id="email"
-          value={(data && data.email) || ""}
+          defaultValue={(data && data.email) || ""}
           className="input input-bordered w-[613px] h-[40px] mt-2 mb-[31px]"
           {...register("email")}
         />
