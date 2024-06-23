@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
+
 export default function Photo() {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function Photo() {
     if (uploadedImage) {
       sessionStorage.setItem('uploadedImage', uploadedImage);
       router.push(`/machine/edit?theme=${encodeURIComponent(themeImage || '')}`);
+
     } else {
       alert('파일을 선택해주세요.');
     }
@@ -39,6 +41,7 @@ export default function Photo() {
         </p>
         <button className="btn btn-active bg-[#A974FF] font-medium px-6 py-3.5 text-[white] border-0">
           서비스 소개페이지로 돌아기기
+
         </button>
       </div>
 

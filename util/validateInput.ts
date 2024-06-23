@@ -10,4 +10,8 @@ export function validatePassword(str: string): boolean {
 export function validatePhoneNumber(phoneNumber: string): boolean {
     const phoneRegex = /^\d{3}-\d{4}-\d{4}$/;
     return phoneRegex.test(phoneNumber);
-  }
+}
+
+export function validateImage(file: File): boolean {
+    return file && file.type.startsWith("image");
+}

@@ -21,11 +21,8 @@ const LoginForm: React.FC = () => {
       id_token: credential,
     };
     try {
-      const response = await axios.post<GoogleLoginResponse>(
-        "/auth/google/token/signin",
-        request
-      );
-      const { access_token, refresh_token } = response.data;
+      const response = await axios.post("/auth/google/token/signin", request);
+      const { access_token, refresh_token } = response.data.data;
       Cookies.set("accessToken", access_token);
       Cookies.set("refreshToken", refresh_token);
       router.push("/about");
@@ -62,14 +59,13 @@ const LoginForm: React.FC = () => {
       password: data.password,
     };
     try {
-      const response = await axios<LocalSigninResponse>({
+      const response = await axios({
         method: "POST",
         url: "/auth/basic/signin",
         headers: { "content-type": "application/x-www-form-urlencoded" },
         data: request,
       });
-
-      const { access_token, refresh_token } = response.data;
+      const { access_token, refresh_token } = response.data.data;
       Cookies.set("accessToken", access_token);
       Cookies.set("refreshToken", refresh_token);
       router.push("/about");
