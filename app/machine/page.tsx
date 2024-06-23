@@ -1,4 +1,4 @@
-// components/Machine.tsx
+
 import Image from "next/image";
 import themeImg1 from "@/assets/machine/themeImg1.jpg";
 import themeImg2 from "@/assets/machine/themeImg2.jpg";
@@ -12,32 +12,39 @@ import Link from "next/link";
 export default function Machine() {
   const themes = [
     {
-      imgSrc: themeImg1,
+      imgSrc: themeImg1.src,
+
       title: "도회적이고 세련된 현대적인 분위기로",
       description: "Description of first product",
     },
     {
-      imgSrc: themeImg2,
+      imgSrc: themeImg2.src,
+
       title: "초현실적이고 미래지향적인 분위기로",
       description: "Description of second product",
     },
     {
-      imgSrc: themeImg3,
+ 
+      imgSrc: themeImg3.src,
+
       title: "청량하고 산뜻한 청량감 넘치는 분위기로",
       description: "Description of third product",
     },
     {
-      imgSrc: themeImg4,
+      imgSrc: themeImg4.src,
+
       title: "자연 경관에서 오는 시원함을 만끽하는 분위기로",
       description: "Description of fourth product",
     },
     {
-      imgSrc: themeImg5,
+      imgSrc: themeImg5.src,
+
       title: "낙낙하고 오래 된 옛날 낙서장 같은 분위기로",
       description: "Description of fifth product",
     },
     {
-      imgSrc: themeImg6,
+      imgSrc: themeImg6.src,
+
       title: "화려하고도 풍성한 예술 세계의 분위기로",
       description: "Description of sixth product",
     },
@@ -74,7 +81,8 @@ export default function Machine() {
             <div>
               <h2 className="text-xl font-medium">{theme.title}</h2>
               <p className="text-gray-500 mt-2">{theme.description}</p>
-              <Link href="/machine/photo" passHref legacyBehavior>
+              <Link href={`/machine/photo?theme=${encodeURIComponent(theme.imgSrc)}`} passHref legacyBehavior>
+
                 <a className="text-black mt-2 flex items-center space-x-2 group">
                   <span className="group-hover:underline">
                     해당 테마로 이동
