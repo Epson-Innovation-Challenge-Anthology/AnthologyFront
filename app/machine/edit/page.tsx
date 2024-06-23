@@ -7,8 +7,7 @@ import Link from "next/link";
 import EditorToolbar from "../../../components/machine/EditorToolbar";
 import Sidebar from "../../../components/machine/EditorSidebar";
 
-
-export default function EditPhoto() {
+export default function Edit() {
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
   const [penColor, setPenColor] = useState<string>("black");
   const [showPenColorPicker, setShowPenColorPicker] = useState<boolean>(false);
@@ -98,16 +97,13 @@ export default function EditPhoto() {
       }
     }
     setIsCropping(!isCropping);
-
   };
 
   const addSticker = (stickerUrl: string) => {
     if (canvas) {
       fabric.Image.fromURL(stickerUrl, (img) => {
         img.scale(0.1);
- 
         img.set({ selectable: true });
-
         canvas.add(img);
         canvas.renderAll();
       });
@@ -181,7 +177,7 @@ export default function EditPhoto() {
           </button>
         </div>
       </div>
-
     </main>
   );
 }
+
