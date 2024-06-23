@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import axios from "@/api/clientAxios";
+import { dataURLtoFile } from "@/util/convertType";
 
 const PrintPage: React.FC = () => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const router = useRouter();
+  const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const image = sessionStorage.getItem("exportedImage");
@@ -17,16 +20,22 @@ const PrintPage: React.FC = () => {
     }
   }, [router]);
 
-  const handlePrint = () => {
-    const printContents = document.getElementById("printable-area")?.innerHTML;
-    const originalContents = document.body.innerHTML;
+  const handlePrint = async () => {
+    if (!imageRef.current) return;
 
-    if (printContents) {
-      document.body.innerHTML = printContents;
-      window.print();
-      document.body.innerHTML = originalContents;
-      window.location.reload(); // to reload the original content
-    }
+    const image = imageRef.current.src;
+    const file = dataURLtoFile(image, "image.png");
+    const formData = new FormData();
+    formData.append("upload_file", file);
+
+    axios({
+      method: "POST",
+      url: "/api/epson/print",
+      data: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   };
 
   return (
@@ -45,8 +54,16 @@ const PrintPage: React.FC = () => {
         </Link>
         <div className="flex flex-col items-center gap-6 mt-10">
           {imageSrc && (
-            <div id="printable-area" className="bg-gray-200 rounded-lg overflow-hidden w-[1281px] h-[721px] flex items-center justify-center">
-              <img src={imageSrc} alt="Exported" className="object-cover w-full h-full" />
+            <div
+              id="printable-area"
+              className="bg-gray-200 rounded-lg overflow-hidden w-[1281px] h-[721px] flex items-center justify-center"
+            >
+              <img
+                ref={imageRef}
+                src={imageSrc}
+                alt="Exported"
+                className="object-cover w-full h-full"
+              />
             </div>
           )}
         </div>
@@ -64,4 +81,3 @@ const PrintPage: React.FC = () => {
 };
 
 export default PrintPage;
-
