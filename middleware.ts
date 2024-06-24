@@ -5,10 +5,10 @@ export function middleware(req: NextRequest) {
 
   if(!token) {
     return NextResponse.redirect(new URL('/main/login', req.url));
-  }
-return NextResponse.next();
+  } 
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/main/my-page',] 
+  matcher: ['/main/my-page', '/machine', '/machine/edit', '/machine/photo', '/machine/print'] 
 };
