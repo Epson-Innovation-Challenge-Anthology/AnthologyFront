@@ -24,6 +24,7 @@ const LoginForm: React.FC = () => {
         Cookies.set("accessToken", data.access_token);
         Cookies.set("refreshToken", data.refresh_token);
         router.push("/about");
+        location.reload();
       },
       onError: (error) => {
         console.log(error);
@@ -41,6 +42,7 @@ const LoginForm: React.FC = () => {
         Cookies.set("accessToken", data.access_token);
         Cookies.set("refreshToken", data.refresh_token);
         router.push("/about");
+        location.reload();
       },
       onError: (error) => {
         console.log(error);
