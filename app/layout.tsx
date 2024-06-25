@@ -16,6 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <CheckModal />
+        <div id="loading"></div>
         <QueryClientProvider client={queryClient}>
           <div className="h-full flex flex-col">
             <div className="flex-1">{children}</div>
