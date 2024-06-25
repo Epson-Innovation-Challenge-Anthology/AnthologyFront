@@ -14,9 +14,10 @@ import {
 } from "@/api/profile/profileAPI";
 import { useOpenModal } from "@/hooks/useOpenModal";
 import { uploadFile } from "@/api/file/fileAPI";
+import LoadingSpinner from "@/components/loading/LoadingSpinner";
 
 export default function MyPage() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const queryClient = useQueryClient();
   const { handleOpenModal } = useOpenModal();
 
@@ -46,8 +47,9 @@ export default function MyPage() {
           responseData.urls.map((url, index) => ({ id: index, url: url }))
         );
       }
+      reset(responseData);
     }
-  }, [responseData]);
+  }, [responseData, reset]);
 
   const handleFileChange = async (event: any) => {
     const file = event.target.files[0];
@@ -100,12 +102,7 @@ export default function MyPage() {
     mutate(request);
   };
 
-  if (isLoading || isPending)
-    return (
-      <main className="flex justify-center items-center h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
-      </main>
-    );
+  if (isLoading || isPending) return <LoadingSpinner />;
 
   return (
     <main className="mx-auto mt-[72px] w-[613px] mb-[94px]">
