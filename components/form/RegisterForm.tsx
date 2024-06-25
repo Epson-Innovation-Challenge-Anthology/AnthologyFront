@@ -2,23 +2,40 @@
 
 import { FieldValues, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import GoogleLoginButton from "../button/GoogleLoginButton";
-import axios from "axios";
+import GoogleLoginButton from "@/components/button/GoogleLoginButton";
 import { validateEmail } from "@/util/validateInput";
-import { useModalStore } from "@/stores/modalStore";
+import { useMutation } from "@tanstack/react-query";
+import { singinGoogle } from "@/api/auth/authAPI";
+import { useOpenModal } from "@/hooks/useOpenModal";
+import LoadingSpinner from "@/components/loading/LoadingSpinner";
+import Portal from "@/components/portal/Portal";
 
 const RegisterForm: React.FC = () => {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
-  const { openModal } = useModalStore();
+  const { handleOpenModal } = useOpenModal();
+
+  const { mutate: googleSignupMutate, isPending: googleSignupPending } =
+    useMutation({
+      mutationFn: singinGoogle,
+      onSuccess: () => {
+        router.push("/main/login");
+      },
+      onError: (error) => {
+        console.log(error);
+        handleOpenModal({
+          title: "회원가입 오류",
+          text: "구글 회원가입에 실패했습니다.",
+        });
+      },
+    });
 
   const onSubmit = (data: FieldValues) => {
     if (!data.email || !validateEmail(data.email)) {
-      openModal({
+      handleOpenModal({
         title: "입력오류",
         text: "이메일을 올바르게 입력해주세요.",
       });
-      document.getElementById("check_modal")?.click();
       return;
     }
     router.push(`/main/register/step/?email=${data.email}`);
@@ -30,17 +47,15 @@ const RegisterForm: React.FC = () => {
     const request: GoogleLoginRequest = {
       id_token: credential,
     };
-    try {
-      await axios.post("/auth/google/token/signin", request);
-      router.push("/main/login");
-    } catch (error) {
-      openModal({
-        title: "로그인 오류",
-        text: "구글 로그인에 실패했습니다.",
-      });
-      document.getElementById("check_modal")?.click();
-    }
+    googleSignupMutate(request);
   };
+
+  if (googleSignupPending)
+    return (
+      <Portal selector="loading">
+        <LoadingSpinner />
+      </Portal>
+    );
 
   return (
     <section className="mt-[351px] w-[392px]">
@@ -82,6 +97,3 @@ const RegisterForm: React.FC = () => {
 };
 
 export default RegisterForm;
-function openModal(arg0: { title: string; text: string }) {
-  throw new Error("Function not implemented.");
-}

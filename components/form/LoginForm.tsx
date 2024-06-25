@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import { FieldValues, useForm } from "react-hook-form";
-import GoogleLoginButton from "../button/GoogleLoginButton";
+import GoogleLoginButton from "@/components/button/GoogleLoginButton";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { validateEmail, validatePassword } from "@/util/validateInput";
 import { useOpenModal } from "@/hooks/useOpenModal";
 import { useMutation } from "@tanstack/react-query";
 import { signinLocal, singinGoogle } from "@/api/auth/authAPI";
-import LoadingSpinner from "../loading/LoadingSpinner";
-import Portal from "../portal/Portal";
+import LoadingSpinner from "@/components/loading/LoadingSpinner";
+import Portal from "@/components/portal/Portal";
 
 const LoginForm: React.FC = () => {
   const { register, handleSubmit } = useForm();

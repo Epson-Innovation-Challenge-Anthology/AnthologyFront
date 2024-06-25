@@ -16,3 +16,7 @@ export const signinLocal = async (request: LocalSigninRequest) => {
     const data: LocalSigninResponse = response.data.data;
     return data;
 }
+
+export const signupLocal = async (request: LocalSignupRequest) => {
+    await axios.post("/auth/basic/signup", request);
+}
