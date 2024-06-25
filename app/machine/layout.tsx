@@ -1,5 +1,5 @@
 import Header from "@/components/header/Header";
-import React from "react";
+import React, { Suspense } from "react";
 
 export default function MachineLayout({
   children,
@@ -9,7 +9,7 @@ export default function MachineLayout({
   return (
     <>
       <Header />
-      {children}
+      <Suspense>{children}</Suspense>
     </>
   );
 }
