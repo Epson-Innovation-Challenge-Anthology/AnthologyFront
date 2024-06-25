@@ -4,15 +4,52 @@ import Link from "next/link";
 import { FieldValues, useForm } from "react-hook-form";
 import GoogleLoginButton from "../button/GoogleLoginButton";
 import Cookies from "js-cookie";
-import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useModalStore } from "@/stores/modalStore";
 import { validateEmail, validatePassword } from "@/util/validateInput";
+import { useOpenModal } from "@/hooks/useOpenModal";
+import { useMutation } from "@tanstack/react-query";
+import { signinLocal, singinGoogle } from "@/api/auth/authAPI";
+import LoadingSpinner from "../loading/LoadingSpinner";
+import Portal from "../portal/Portal";
 
 const LoginForm: React.FC = () => {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
-  const { openModal } = useModalStore();
+  const { handleOpenModal } = useOpenModal();
+
+  const { mutate: googleSigninMutate, isPending: googleSigninPending } =
+    useMutation({
+      mutationFn: singinGoogle,
+      onSuccess: (data) => {
+        Cookies.set("accessToken", data.access_token);
+        Cookies.set("refreshToken", data.refresh_token);
+        router.push("/about");
+      },
+      onError: (error) => {
+        console.log(error);
+        handleOpenModal({
+          title: "로그인 오류",
+          text: "구글 로그인에 실패했습니다.",
+        });
+      },
+    });
+
+  const { mutate: localSigninMutate, isPending: localSigninPending } =
+    useMutation({
+      mutationFn: signinLocal,
+      onSuccess: (data) => {
+        Cookies.set("accessToken", data.access_token);
+        Cookies.set("refreshToken", data.refresh_token);
+        router.push("/about");
+      },
+      onError: (error) => {
+        console.log(error);
+        handleOpenModal({
+          title: "로그인 오류",
+          text: "구글 로그인에 실패했습니다.",
+        });
+      },
+    });
 
   const googleLogin = async (credential: string | undefined) => {
     if (!credential) return;
@@ -20,37 +57,20 @@ const LoginForm: React.FC = () => {
     const request: GoogleLoginRequest = {
       id_token: credential,
     };
-    try {
-      const response = await axios.post("/auth/google/token/signin", request);
-      const { access_token, refresh_token } = response.data.data;
-      Cookies.set("accessToken", access_token);
-      Cookies.set("refreshToken", refresh_token);
-      router.push("/about");
-    } catch (error) {
-      openModal({
-        title: "로그인 오류",
-        text: "구글 로그인에 실패했습니다.",
-      });
-      document.getElementById("check_modal")?.click();
-    }
+    googleSigninMutate(request);
   };
 
   const onSubmit = async (data: FieldValues) => {
     if (!data.email || !data.password) {
-      openModal({
-        title: "입력오류",
-        text: "모든 항목을 입력해주세요.",
-      });
-      document.getElementById("check_modal")?.click();
+      handleOpenModal({ title: "입력오류", text: "모든 항목을 입력해주세요." });
       return;
     }
 
     if (!validateEmail(data.email) || !validatePassword(data.password)) {
-      openModal({
+      handleOpenModal({
         title: "입력오류",
         text: "형식이 올바르지 않습니다. 비밀번호는 8자 이상이어야 합니다.",
       });
-      document.getElementById("check_modal")?.click();
       return;
     }
 
@@ -58,25 +78,15 @@ const LoginForm: React.FC = () => {
       email: data.email,
       password: data.password,
     };
-    try {
-      const response = await axios({
-        method: "POST",
-        url: "/auth/basic/signin",
-        headers: { "content-type": "application/x-www-form-urlencoded" },
-        data: request,
-      });
-      const { access_token, refresh_token } = response.data.data;
-      Cookies.set("accessToken", access_token);
-      Cookies.set("refreshToken", refresh_token);
-      router.push("/about");
-    } catch (error) {
-      openModal({
-        title: "로그인 오류",
-        text: "이메일이나 비밀번호가 틀렸습니다",
-      });
-      document.getElementById("check_modal")?.click();
-    }
+    localSigninMutate(request);
   };
+
+  if (googleSigninPending || localSigninPending)
+    return (
+      <Portal selector="loading">
+        <LoadingSpinner />
+      </Portal>
+    );
 
   return (
     <section className="w-[476px] bg-[#CEBCEC] px-[42px]">

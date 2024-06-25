@@ -15,6 +15,7 @@ import {
 import { useOpenModal } from "@/hooks/useOpenModal";
 import { uploadFile } from "@/api/file/fileAPI";
 import LoadingSpinner from "@/components/loading/LoadingSpinner";
+import Portal from "@/components/portal/Portal";
 
 export default function MyPage() {
   const { register, handleSubmit, reset } = useForm();
@@ -102,7 +103,12 @@ export default function MyPage() {
     mutate(request);
   };
 
-  if (isLoading || isPending) return <LoadingSpinner />;
+  if (isLoading || isPending)
+    return (
+      <Portal selector="loading">
+        <LoadingSpinner />
+      </Portal>
+    );
 
   return (
     <main className="mx-auto mt-[72px] w-[613px] mb-[94px]">
