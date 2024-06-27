@@ -10,5 +10,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/main/my-page', '/machine', '/machine/edit', '/machine/photo', '/machine/print'] 
+  matcher: ['/main/my-page', '/machine', '/machine/edit', '/machine/photo', '/machine/print', '/orbit/travel'] 
 };
