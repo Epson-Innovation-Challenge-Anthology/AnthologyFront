@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import AboutImg1 from "@/assets/about/aboutImg1.jpg";
@@ -10,7 +12,11 @@ import Icon2 from "@/assets/about/icon2.png";
 import Icon3 from "@/assets/about/icon3.png";
 import Icon4 from "@/assets/about/icon4.png";
 
+import { useRouter } from "next/navigation";
+
 const AboutPage: React.FC = () => {
+  const router = useRouter();
+
   return (
     <div className="flex flex-col items-center px-8 mt-[50px] mb-[50px] box-border overflow-hidden">
       <div className="flex flex-col gap-6 items-center justify-start w-full max-w-6xl mx-auto mb-40">
@@ -94,7 +100,10 @@ const AboutPage: React.FC = () => {
               <br />
               색다른 의미가 있는 사진을 남기고 기억을 저장해 보세요.
             </p>
-            <button className="btn btn-active bg-[#A974FF] px-6 py-3.5 text-[white] border-0">
+            <button
+              className="btn btn-active bg-[#A974FF] px-6 py-3.5 text-[white] border-0"
+              onClick={() => router.push("/orbit/travel")}
+            >
               Button
             </button>
           </div>
@@ -113,8 +122,8 @@ const AboutPage: React.FC = () => {
       </div>
 
       <div className="flex flex-col md:flex-row items-center justify-between w-full mx-auto mb-40">
-      <div className="w-[45vw] ml-[2.0vw] mb-0">
-      <Image
+        <div className="w-[45vw] ml-[2.0vw] mb-0">
+          <Image
             src={AboutImg4}
             alt="About Image 2"
             layout="responsive"
@@ -188,7 +197,7 @@ const AboutPage: React.FC = () => {
 
       <div className="flex flex-col md:flex-row gap-12 items-start justify-between w-full ml-5 md:ml-11 mb-20">
         <div className="flex flex-col gap-2 items-start justify-center w-full md:w-1/2">
-        <div className="flex-shrink-0 w-[2vw] h-[2vw] relative overflow-hidden ">
+          <div className="flex-shrink-0 w-[2vw] h-[2vw] relative overflow-hidden ">
             <Image
               src={Icon3}
               alt="About Icon 2"
@@ -228,4 +237,3 @@ const AboutPage: React.FC = () => {
 };
 
 export default AboutPage;
-

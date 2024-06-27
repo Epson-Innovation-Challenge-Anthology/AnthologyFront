@@ -1,4 +1,4 @@
-import Header from "@/components/header/Header";
+import OrbitHeader from "@/components/header/OrbitHeader";
 
 export default function MainLayout({
   children,
@@ -7,7 +7,7 @@ export default function MainLayout({
 }>) {
   return (
     <>
-      <Header />
+      <OrbitHeader />
       {children}
     </>
   );
