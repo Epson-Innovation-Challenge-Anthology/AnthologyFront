@@ -22,7 +22,7 @@ clientAxios.interceptors.request.use(
 clientAxios.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response.statusCode === 401) {
+    if (error.response.status === 401) {
       const refreshToken = Cookies.get('refreshToken')
       if(refreshToken){
         try {
