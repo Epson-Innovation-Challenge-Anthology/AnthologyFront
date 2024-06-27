@@ -13,3 +13,15 @@ type FootPrint = {
     image_url: string;
     updated_at: string;
 }
+
+type UpdateDistanceParam = {
+    userId: string
+    distance: string
+}
+
+type UpdateActivityRequest = {
+    title: string
+    image_url: string
+}
+
+type UpdateActivityRequestWithId = UpdateActivityRequest & { userId: string };

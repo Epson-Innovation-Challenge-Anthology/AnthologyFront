@@ -30,13 +30,14 @@ import { sortAndReturnTopN } from "@/util/sort";
 import LoadingSpinner from "@/components/loading/LoadingSpinner";
 import Portal from "@/components/portal/Portal";
 
+type LabelInfo = {
+  name: string;
+  element: HTMLElement | null;
+};
+
 export default function Travel() {
   const mountRef = useRef<HTMLDivElement>(null);
 
-  type LabelInfo = {
-    name: string;
-    element: HTMLElement | null;
-  };
   const [labels, setLabels] = useState<LabelInfo[]>([]);
 
   const { data: responseData, isLoading } = useQuery({
