@@ -92,7 +92,7 @@ export default function Travel() {
 
     const scene = new Scene();
     const camera = new PerspectiveCamera(50, width / height, 0.1, 1000);
-    const renderer = new WebGLRenderer();
+    const renderer = new WebGLRenderer({ antialias: false });
     renderer.setSize(width, height);
     mount.appendChild(renderer.domElement);
 
@@ -108,11 +108,13 @@ export default function Travel() {
     labelRenderer.domElement.style.top = "0";
     mount.appendChild(labelRenderer.domElement);
 
+    const textureLoader = new TextureLoader();
+
     const createPlanet = (size: number, image: string, distance: number) => {
       const planet = new Mesh(
         new SphereGeometry(size, 32, 32),
         new MeshStandardMaterial({
-          map: new TextureLoader().load(image),
+          map: textureLoader.load(image),
         })
       );
       scene.add(planet);
@@ -147,7 +149,7 @@ export default function Travel() {
     const sun = new Mesh(
       new SphereGeometry(4, 32, 32),
       new MeshBasicMaterial({
-        map: new TextureLoader().load("/sun.jpg"),
+        map: textureLoader.load("/sun.jpg"),
       })
     );
     scene.add(sun);
@@ -192,8 +194,10 @@ export default function Travel() {
     camera.position.set(30, 47, 40);
     camera.lookAt(0, 0, 0);
 
+    let animationId: number;
+
     const animate = () => {
-      requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(animate);
       sun.rotation.y += 0.004;
       mercury.rotation.y += 0.0017;
       venus.rotation.y += 0.00041;
@@ -211,8 +215,22 @@ export default function Travel() {
     animate();
 
     return () => {
+      cancelAnimationFrame(animationId);
       mount.removeChild(renderer.domElement);
       mount.removeChild(labelRenderer.domElement);
+
+      scene.traverse((object) => {
+        if (object instanceof Mesh) {
+          object.geometry.dispose();
+          if (object.material instanceof Array) {
+            object.material.forEach((material) => material.dispose());
+          } else {
+            object.material.dispose();
+          }
+        }
+      });
+
+      renderer.dispose();
     };
   }, [labels]);
 
