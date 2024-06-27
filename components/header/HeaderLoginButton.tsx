@@ -26,7 +26,7 @@ const HeaderLoginButton: React.FC = () => {
     Cookies.remove("accessToken");
     Cookies.remove("refreshToken");
     router.push("/main/login");
-    location.reload();
+    router.refresh();
   };
 
   return (

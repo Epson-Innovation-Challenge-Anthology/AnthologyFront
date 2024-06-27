@@ -24,7 +24,7 @@ const LoginForm: React.FC = () => {
         Cookies.set("accessToken", data.access_token);
         Cookies.set("refreshToken", data.refresh_token);
         router.push("/about");
-        location.reload();
+        router.refresh();
       },
       onError: (error) => {
         console.log(error);
@@ -42,13 +42,13 @@ const LoginForm: React.FC = () => {
         Cookies.set("accessToken", data.access_token);
         Cookies.set("refreshToken", data.refresh_token);
         router.push("/about");
-        location.reload();
+        router.refresh();
       },
       onError: (error) => {
         console.log(error);
         handleOpenModal({
           title: "로그인 오류",
-          text: "구글 로그인에 실패했습니다.",
+          text: "로그인에 실패했습니다.",
         });
       },
     });
