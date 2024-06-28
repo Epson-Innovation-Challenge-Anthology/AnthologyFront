@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { fabric } from 'fabric';
-import { Theme, useTheme } from '@mui/material/styles';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { fabric } from "fabric";
+import { useState, useEffect } from "react";
+import { Theme, useTheme } from "@mui/material/styles";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 interface SidebarProps {
   canvas: fabric.Canvas;
   img: fabric.Image;
+  onThemeSelect: (theme: string) => void;
+  frameImages: Record<string, string>;
+  adjustSaturation: (value: number) => void;
+  adjustBrightness: (value: number) => void;
+  adjustExposure: (value: number) => void;
+  adjustContrast: (value: number) => void;
 }
 
 const ITEM_HEIGHT = 48;
@@ -22,16 +28,19 @@ const MenuProps = {
   },
 };
 
-const themes = [
-  'Theme 01',
-  'Theme 02',
-  'Theme 03',
-  'Theme 04',
-  'Theme 05',
-];
+const themes = ["theme1", "theme2", "theme3"];
 
-const Sidebar: React.FC<SidebarProps> = ({ canvas, img }) => {
-  const [selectedTheme, setSelectedTheme] = useState<string>('');
+const Sidebar: React.FC<SidebarProps> = ({
+  canvas,
+  img,
+  onThemeSelect,
+  frameImages,
+  adjustSaturation,
+  adjustBrightness,
+  adjustExposure,
+  adjustContrast,
+}) => {
+  const [selectedTheme, setSelectedTheme] = useState<string>("");
   const [saturation, setSaturation] = useState(0);
   const [brightness, setBrightness] = useState(0);
   const [exposure, setExposure] = useState(0);
@@ -40,49 +49,26 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, img }) => {
   const theme = useTheme();
 
   const handleThemeChange = (event: SelectChangeEvent<string>) => {
-    setSelectedTheme(event.target.value as string);
-  };
-
-  const applyFilter = (index: number, filter: fabric.IBaseFilter) => {
-    if (!img.filters) return;
-    img.filters[index] = filter;
-    img.applyFilters();
-    canvas.renderAll();
-  };
-
-  const adjustSaturation = (value: number) => {
-    setSaturation(value);
-    applyFilter(0, new fabric.Image.filters.Saturation({ saturation: value }));
-  };
-
-  const adjustBrightness = (value: number) => {
-    setBrightness(value);
-    applyFilter(1, new fabric.Image.filters.Brightness({ brightness: value }));
-  };
-
-  const adjustExposure = (value: number) => {
-    setExposure(value);
-    applyFilter(2, new fabric.Image.filters.Brightness({ brightness: value }));
-  };
-
-  const adjustContrast = (value: number) => {
-    setContrast(value);
-    applyFilter(3, new fabric.Image.filters.Contrast({ contrast: value }));
+    const theme = event.target.value as string;
+    setSelectedTheme(theme);
+    onThemeSelect(theme);
   };
 
   useEffect(() => {
-    if (img.filters === undefined) {
-      img.filters = [];
-    }
+    adjustSaturation(saturation);
+  }, [saturation]);
 
-    img.filters[0] = new fabric.Image.filters.Saturation({ saturation });
-    img.filters[1] = new fabric.Image.filters.Brightness({ brightness });
-    img.filters[2] = new fabric.Image.filters.Brightness({ brightness: exposure });
-    img.filters[3] = new fabric.Image.filters.Contrast({ contrast });
+  useEffect(() => {
+    adjustBrightness(brightness);
+  }, [brightness]);
 
-    img.applyFilters();
-    canvas.renderAll();
-  }, [saturation, brightness, exposure, contrast]);
+  useEffect(() => {
+    adjustExposure(exposure);
+  }, [exposure]);
+
+  useEffect(() => {
+    adjustContrast(contrast);
+  }, [contrast]);
 
   return (
     <div className="bg-white border-l border-gray-200 flex-shrink-0 w-64 h-full p-6">
@@ -96,8 +82,10 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, img }) => {
           />
         </div>
         <div className="flex flex-col gap-3">
-          <div className="text-black font-medium">사진 액자로 쓸 테마 고르기</div>
-          <FormControl sx={{ m: 1, width: '100%' }}>
+          <div className="text-black font-medium">
+            사진 액자로 쓸 테마 고르기
+          </div>
+          <FormControl sx={{ m: 1, width: "100%" }}>
             <Select
               displayEmpty
               value={selectedTheme}
@@ -110,7 +98,7 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, img }) => {
                 return selected;
               }}
               MenuProps={MenuProps}
-              inputProps={{ 'aria-label': 'Without label' }}
+              inputProps={{ "aria-label": "Without label" }}
             >
               <MenuItem disabled value="">
                 <em>액자 선택</em>
@@ -119,7 +107,9 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, img }) => {
                 <MenuItem
                   key={theme}
                   value={theme}
-                  style={{ fontWeight: selectedTheme === theme ? 'bold' : 'normal' }}
+                  style={{
+                    fontWeight: selectedTheme === theme ? "bold" : "normal",
+                  }}
                 >
                   {theme}
                 </MenuItem>
@@ -128,10 +118,34 @@ const Sidebar: React.FC<SidebarProps> = ({ canvas, img }) => {
           </FormControl>
         </div>
         {[
-          { label: "밝기", value: brightness, onChange: adjustBrightness, min: -1, max: 1 },
-          { label: "노출", value: exposure, onChange: adjustExposure, min: -1, max: 1 },
-          { label: "대비", value: contrast, onChange: adjustContrast, min: -1, max: 1 },
-          { label: "채도", value: saturation, onChange: adjustSaturation, min: -1, max: 1 },
+          {
+            label: "밝기",
+            value: brightness,
+            onChange: setBrightness,
+            min: -1,
+            max: 1,
+          },
+          {
+            label: "노출",
+            value: exposure,
+            onChange: setExposure,
+            min: -1,
+            max: 1,
+          },
+          {
+            label: "대비",
+            value: contrast,
+            onChange: setContrast,
+            min: -1,
+            max: 1,
+          },
+          {
+            label: "채도",
+            value: saturation,
+            onChange: setSaturation,
+            min: -1,
+            max: 1,
+          },
         ].map(({ label, value, onChange, min, max }) => (
           <div key={label} className="flex flex-col gap-3">
             <div className="text-black font-medium">{label}</div>

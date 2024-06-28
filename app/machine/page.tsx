@@ -1,3 +1,4 @@
+"use client";
 
 import Image from "next/image";
 import themeImg1 from "@/assets/machine/themeImg1.jpg";
@@ -8,8 +9,11 @@ import themeImg5 from "@/assets/machine/themeImg5.jpg";
 import themeImg6 from "@/assets/machine/themeImg6.jpg";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Machine() {
+  const router = useRouter();
+
   const themes = [
     {
       imgSrc: themeImg1.src,
@@ -24,7 +28,6 @@ export default function Machine() {
       description: "Description of second product",
     },
     {
- 
       imgSrc: themeImg3.src,
 
       title: "청량하고 산뜻한 청량감 넘치는 분위기로",
@@ -53,17 +56,18 @@ export default function Machine() {
   return (
     <main className="px-20 pt-20 pb-21">
       <div className="text-center">
-        <h1 className="text-6xl font-semibold text-[#AE76CC]">
+        <h1 className="text-6xl font-semibold text-[#AE76CC] ">
           앤솔머신에 넣을 촬영 테마 고르기
         </h1>
         <p className="text-xl text-gray-500 my-4">
           앤솔머신에 넣을 오늘의 촬영 주제를 정해주세요.
         </p>
-        <Link href="/about" passHref>
-          <button className="btn btn-active bg-[#A974FF] font-medium px-6 py-3.5 text-[white] border-0">
-            서비스 소개페이지로 돌아기기
-          </button>
-        </Link>
+        <button
+          onClick={() => router.push("/about")}
+          className="bg-[#ae76cc] text-[#ffdddd] rounded-lg px-6 py-3 shadow"
+        >
+          서비스 소개페이지로 돌아가기
+        </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-[100px] mb-[500px]">
@@ -81,8 +85,7 @@ export default function Machine() {
             <div>
               <h2 className="text-xl font-medium">{theme.title}</h2>
               <p className="text-gray-500 mt-2">{theme.description}</p>
-              <Link href={`/machine/photo?theme=${encodeURIComponent(theme.imgSrc)}`} passHref legacyBehavior>
-
+              <Link href={`/machine/photo`} passHref legacyBehavior>
                 <a className="text-black mt-2 flex items-center space-x-2 group">
                   <span className="group-hover:underline">
                     해당 테마로 이동
