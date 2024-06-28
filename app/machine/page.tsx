@@ -56,7 +56,7 @@ export default function Machine() {
   return (
     <main className="px-20 pt-20 pb-21">
       <div className="text-center">
-        <h1 className="text-6xl font-semibold text-[#AE76CC]">
+        <h1 className="text-6xl font-semibold text-[#AE76CC] ">
           앤솔머신에 넣을 촬영 테마 고르기
         </h1>
         <p className="text-xl text-gray-500 my-4">

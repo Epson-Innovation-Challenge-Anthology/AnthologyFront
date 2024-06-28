@@ -171,7 +171,7 @@ export default function EditPhoto() {
   }, [canvas, frameObject]);
 
   return (
-    <main className="relative bg-white min-h-screen flex flex-col items-center">
+    <main className="relative bg-white min-h-screen flex flex-col items-center mb-40 mt-10">
       <div className="flex flex-col items-center justify-start w-full max-w-3xl mt-10 px-4 gap-6">
         <div className="text-[#ae76cc] text-center font-semibold text-4xl">
           사진 편집하기
@@ -227,7 +227,7 @@ export default function EditPhoto() {
             />
           )}
         </div>
-        <div className="bg-[#925bb0] w-full h-16 flex items-center justify-end px-4">
+        <div className="bg-[#925bb0] w-full h-16 flex items-center justify-end px-4 ">
           <button
             onClick={exportImage}
             className="bg-[#ff7d7d] text-white rounded-lg px-4 py-2"

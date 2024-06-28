@@ -55,7 +55,7 @@ const PrintPage: React.FC = () => {
 
   return (
     <div className="bg-white min-h-screen flex flex-col items-center overflow-hidden">
-      <div className="w-full max-w-4xl mt-10 px-4 flex flex-col items-center gap-6">
+      <div className="w-full max-w-4xl mt-20 px-4 flex flex-col items-center gap-6">
         <div className="text-[#ae76cc] text-center font-semibold text-4xl">
           기억을 담은 사진을 출력해보세요.
         </div>
