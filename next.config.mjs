@@ -9,14 +9,6 @@ const nextConfig = {
             },
         ];
     },
-    async rewrites() {
-        return [
-            {
-                source: '/:path*',
-                destination: 'https://palm.fly.dev/:path*'
-            }
-        ]
-    },
     images: {
         remotePatterns: [
           {

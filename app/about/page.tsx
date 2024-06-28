@@ -161,8 +161,6 @@ const AboutPage: React.FC = () => {
         </div>
       </div>
 
-
-
       <div className="flex flex-col md:flex-row gap-12 items-start justify-between w-full ml-5 md:ml-11 mb-20">
         <div className="flex flex-col gap-2 items-start justify-center w-full md:w-1/2">
           <div className="flex-shrink-0 w-[1.5vw] h-[1.5vw] relative overflow-hidden">
@@ -206,11 +204,7 @@ const AboutPage: React.FC = () => {
 
       <div className="flex flex-col md:flex-row gap-12 items-start justify-between w-full ml-5 md:ml-11 mb-20">
         <div className="flex flex-col gap-2 items-start justify-center w-full md:w-1/2">
-<<<<<<< HEAD
-          <div className="flex-shrink-0 w-[2vw] h-[2vw] relative overflow-hidden ">
-=======
-        <div className="flex-shrink-0 w-[1.5vw] h-[1.5vw] relative overflow-hidden ">
->>>>>>> 77e6e9e (FIX 크기 수정)
+          <div className="flex-shrink-0 w-[1.5vw] h-[1.5vw] relative overflow-hidden ">
             <Image
               src={Icon3}
               alt="About Icon 2"

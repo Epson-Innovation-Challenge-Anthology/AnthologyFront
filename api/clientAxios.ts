@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 
 
 const clientAxios = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: 'https://palm.fly.dev'
 })
 
 clientAxios.interceptors.request.use(
