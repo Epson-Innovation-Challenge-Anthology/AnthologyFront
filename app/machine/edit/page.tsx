@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { fabric } from "fabric";
 import EditorToolbar from "../../../components/machine/EditorToolbar";
@@ -29,6 +29,7 @@ export default function EditPhoto() {
   const [showPenColorPicker, setShowPenColorPicker] = useState<boolean>(false);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const canvasRef = useRef<fabric.Canvas | null>(null);
 
   useEffect(() => {
     const image = sessionStorage.getItem("uploadedImage");
@@ -43,7 +44,6 @@ export default function EditPhoto() {
     const canvasElement = new fabric.Canvas("canvas", {
       width: CANVAS_WIDTH,
       height: CANVAS_HEIGHT,
-      isDrawingMode: true,
       backgroundColor: "white",
     });
 
@@ -51,8 +51,10 @@ export default function EditPhoto() {
     penBrush.color = penColor;
     penBrush.width = 5;
     canvasElement.freeDrawingBrush = penBrush;
+    canvasElement.isDrawingMode = true;
 
     setCanvas(canvasElement);
+    canvasRef.current = canvasElement;
 
     try {
       const img = await new Promise<fabric.Image>((resolve, reject) => {
@@ -88,17 +90,17 @@ export default function EditPhoto() {
       fabric.Image.fromURL(frameSrc, (img) => {
         img.scaleToWidth(canvas.getWidth());
         img.set({
-          originX: "center",
-          originY: "center",
           left: canvas.getWidth() / 2,
           top: canvas.getHeight() / 2,
+          originX: "center",
+          originY: "center",
           selectable: false,
           evented: false,
-          name: "frame",
         });
 
         setFrameObject(img);
-        canvas.setOverlayImage(img, canvas.renderAll.bind(canvas));
+        canvas.add(img);
+        canvas.renderAll();
       });
     }
   };
@@ -133,12 +135,13 @@ export default function EditPhoto() {
   };
 
   const exportImage = () => {
-    if (canvas) {
-      canvas.isDrawingMode = false;
-      canvas.discardActiveObject();
-      canvas.renderAll();
+    const canvasElement = canvasRef.current;
+    if (canvasElement) {
+      canvasElement.isDrawingMode = false;
+      canvasElement.discardActiveObject();
+      canvasElement.renderAll();
 
-      const image = canvas.toDataURL({
+      const image = canvasElement.toDataURL({
         format: "jpeg",
         quality: 0.8,
       });
@@ -155,10 +158,6 @@ export default function EditPhoto() {
         if (path) {
           path.selectable = false;
           path.evented = false;
-          canvas.add(path);
-          if (frameObject) {
-            canvas.bringToFront(frameObject);
-          }
           canvas.renderAll();
         }
       });
