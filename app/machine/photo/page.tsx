@@ -1,8 +1,7 @@
 "use client";
-
+import Link from "next/link";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-
 
 export default function Photo() {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
@@ -23,8 +22,7 @@ export default function Photo() {
   const handleEditClick = () => {
     if (uploadedImage) {
       sessionStorage.setItem('uploadedImage', uploadedImage);
-      router.push(`/machine/edit?theme=${encodeURIComponent(themeImage || '')}`);
-
+      router.push(`/machine/edit`);
     } else {
       alert('파일을 선택해주세요.');
     }
@@ -39,10 +37,11 @@ export default function Photo() {
         <p className="text-xl text-gray-500 my-4">
           찍은 사진을 올리고,
         </p>
-        <button className="btn btn-active bg-[#A974FF] font-medium px-6 py-3.5 text-[white] border-0">
-          서비스 소개페이지로 돌아기기
-
-        </button>
+        <Link href="/about" passHref>
+          <button className="btn btn-active bg-[#A974FF] font-medium px-6 py-3.5 text-[white] border-0">
+            서비스 소개페이지로 돌아기기
+          </button>
+        </Link>
       </div>
 
       <div className="max-w-screen-lg mx-auto bg-white p-10 rounded-lg">

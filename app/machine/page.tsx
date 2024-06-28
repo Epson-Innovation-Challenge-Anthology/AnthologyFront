@@ -88,6 +88,7 @@ export default function Machine() {
             <div>
               <h2 className="text-xl font-medium">{theme.title}</h2>
               <p className="text-gray-500 mt-2">{theme.description}</p>
+<<<<<<< HEAD
               <Link
                 href={`/machine/photo?theme=${encodeURIComponent(
                   theme.imgSrc
@@ -95,6 +96,10 @@ export default function Machine() {
                 passHref
                 legacyBehavior
               >
+=======
+              <Link href={`/machine/photo`} passHref legacyBehavior>
+
+>>>>>>> 18e83b1 (FIX 편집 포토샵, 테마만 가능)
                 <a className="text-black mt-2 flex items-center space-x-2 group">
                   <span className="group-hover:underline">
                     해당 테마로 이동
