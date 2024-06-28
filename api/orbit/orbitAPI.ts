@@ -1,5 +1,4 @@
 import axios from "@/api/clientAxios";
-import exp from "constants";
 
 export const getFriends = async () => {
     const response = await axios.get("/api/orbit");
