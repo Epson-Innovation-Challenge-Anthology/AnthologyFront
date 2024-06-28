@@ -9,7 +9,6 @@ import themeImg5 from "@/assets/machine/themeImg5.jpg";
 import themeImg6 from "@/assets/machine/themeImg6.jpg";
 
 import Link from "next/link";
-
 import { useRouter } from "next/navigation";
 
 export default function Machine() {
@@ -63,14 +62,12 @@ export default function Machine() {
         <p className="text-xl text-gray-500 my-4">
           앤솔머신에 넣을 오늘의 촬영 주제를 정해주세요.
         </p>
-        <Link href="/about" passHref>
-          <button
-            className="btn btn-active bg-[#A974FF] font-medium px-6 py-3.5 text-[white] border-0"
-            onClick={() => router.push("/about")}
-          >
-            서비스 소개페이지로 돌아기기
-          </button>
-        </Link>
+        <button
+          onClick={() => router.push("/about")}
+          className="bg-[#ae76cc] text-[#ffdddd] rounded-lg px-6 py-3 shadow"
+        >
+          서비스 소개페이지로 돌아가기
+        </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-[100px] mb-[500px]">
@@ -88,18 +85,7 @@ export default function Machine() {
             <div>
               <h2 className="text-xl font-medium">{theme.title}</h2>
               <p className="text-gray-500 mt-2">{theme.description}</p>
-<<<<<<< HEAD
-              <Link
-                href={`/machine/photo?theme=${encodeURIComponent(
-                  theme.imgSrc
-                )}`}
-                passHref
-                legacyBehavior
-              >
-=======
               <Link href={`/machine/photo`} passHref legacyBehavior>
-
->>>>>>> 18e83b1 (FIX 편집 포토샵, 테마만 가능)
                 <a className="text-black mt-2 flex items-center space-x-2 group">
                   <span className="group-hover:underline">
                     해당 테마로 이동

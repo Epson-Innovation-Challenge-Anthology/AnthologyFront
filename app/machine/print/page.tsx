@@ -71,7 +71,7 @@ const PrintPage: React.FC = () => {
           {imageSrc && (
             <div
               id="printable-area"
-              className="bg-gray-200 rounded-lg overflow-hidden w-[550px] h-[800px] flex items-center justify-center border-solid border-2 border-black	"
+              className="bg-gray-200 rounded-lg overflow-hidden w-[550px] h-[770px] flex items-center justify-center border-solid border-2 border-black	"
             >
               <img
                 ref={imageRef}

@@ -46,6 +46,12 @@ export default function EditPhoto() {
       isDrawingMode: true,
       backgroundColor: "white",
     });
+
+    const penBrush = new fabric.PencilBrush(canvasElement);
+    penBrush.color = penColor;
+    penBrush.width = 5;
+    canvasElement.freeDrawingBrush = penBrush;
+
     setCanvas(canvasElement);
 
     try {
@@ -76,6 +82,9 @@ export default function EditPhoto() {
   const handleThemeSelect = (theme: string) => {
     const frameSrc = frameImages[theme];
     if (frameSrc && canvas) {
+      if (frameObject) {
+        canvas.remove(frameObject);
+      }
       fabric.Image.fromURL(frameSrc, (img) => {
         img.scaleToWidth(canvas.getWidth());
         img.set({
@@ -125,10 +134,15 @@ export default function EditPhoto() {
 
   const exportImage = () => {
     if (canvas) {
+      canvas.isDrawingMode = false;
+      canvas.discardActiveObject();
+      canvas.renderAll();
+
       const image = canvas.toDataURL({
         format: "jpeg",
         quality: 0.8,
       });
+
       sessionStorage.setItem("exportedImage", image);
       router.push("/machine/print");
     }
@@ -136,9 +150,16 @@ export default function EditPhoto() {
 
   useEffect(() => {
     if (canvas) {
-      canvas.on("path:created", () => {
-        if (frameObject) {
-          canvas.bringToFront(frameObject);
+      canvas.on("path:created", (e) => {
+        const path = e.target;
+        if (path) {
+          path.selectable = false;
+          path.evented = false;
+          canvas.add(path);
+          if (frameObject) {
+            canvas.bringToFront(frameObject);
+          }
+          canvas.renderAll();
         }
       });
 
@@ -163,12 +184,12 @@ export default function EditPhoto() {
           onClick={() => router.push("/about")}
           className="bg-[#ae76cc] text-[#ffdddd] rounded-lg px-6 py-3 shadow"
         >
-          서비스 소개페이지로 돌아기기
+          서비스 소개페이지로 돌아가기
         </button>
       </div>
       <div
         className="flex flex-col bg-[#f5f5f5] my-10"
-        style={{ width: `${TOTAL_WIDTH}px`, margin: "0 auto" }}
+        style={{ width: `${TOTAL_WIDTH}px`, margin: "30px 0" }}
       >
         <EditorToolbar
           canvas={canvas}

@@ -37,11 +37,12 @@ export default function Photo() {
         <p className="text-xl text-gray-500 my-4">
           찍은 사진을 올리고,
         </p>
-        <Link href="/about" passHref>
-          <button className="btn btn-active bg-[#A974FF] font-medium px-6 py-3.5 text-[white] border-0">
-            서비스 소개페이지로 돌아기기
-          </button>
-        </Link>
+        <button
+          onClick={() => router.push("/about")}
+          className="bg-[#ae76cc] text-[#ffdddd] rounded-lg px-6 py-3 shadow"
+        >
+          서비스 소개페이지로 돌아가기
+        </button>
       </div>
 
       <div className="max-w-screen-lg mx-auto bg-white p-10 rounded-lg">
