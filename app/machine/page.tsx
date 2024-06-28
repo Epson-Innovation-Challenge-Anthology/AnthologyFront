@@ -1,3 +1,4 @@
+"use client";
 
 import Image from "next/image";
 import themeImg1 from "@/assets/machine/themeImg1.jpg";
@@ -9,7 +10,11 @@ import themeImg6 from "@/assets/machine/themeImg6.jpg";
 
 import Link from "next/link";
 
+import { useRouter } from "next/navigation";
+
 export default function Machine() {
+  const router = useRouter();
+
   const themes = [
     {
       imgSrc: themeImg1.src,
@@ -24,7 +29,6 @@ export default function Machine() {
       description: "Description of second product",
     },
     {
- 
       imgSrc: themeImg3.src,
 
       title: "청량하고 산뜻한 청량감 넘치는 분위기로",
@@ -60,7 +64,10 @@ export default function Machine() {
           앤솔머신에 넣을 오늘의 촬영 주제를 정해주세요.
         </p>
         <Link href="/about" passHref>
-          <button className="btn btn-active bg-[#A974FF] font-medium px-6 py-3.5 text-[white] border-0">
+          <button
+            className="btn btn-active bg-[#A974FF] font-medium px-6 py-3.5 text-[white] border-0"
+            onClick={() => router.push("/about")}
+          >
             서비스 소개페이지로 돌아기기
           </button>
         </Link>
@@ -81,8 +88,13 @@ export default function Machine() {
             <div>
               <h2 className="text-xl font-medium">{theme.title}</h2>
               <p className="text-gray-500 mt-2">{theme.description}</p>
-              <Link href={`/machine/photo?theme=${encodeURIComponent(theme.imgSrc)}`} passHref legacyBehavior>
-
+              <Link
+                href={`/machine/photo?theme=${encodeURIComponent(
+                  theme.imgSrc
+                )}`}
+                passHref
+                legacyBehavior
+              >
                 <a className="text-black mt-2 flex items-center space-x-2 group">
                   <span className="group-hover:underline">
                     해당 테마로 이동

@@ -29,6 +29,14 @@ const AboutPage: React.FC = () => {
         <button className="btn btn-active bg-[#A974FF] font-medium px-6 py-3.5 text-[white] border-0">
           첫 페이지로 이동하기
         </button>
+        <button
+          className="btn btn-active bg-[#A974FF] font-medium px-6 py-3.5 text-[white] border-0"
+          onClick={() =>
+            router.push("https://svelte-playground-tau.vercel.app/gallery")
+          }
+        >
+          둘러보기
+        </button>
       </div>
 
       <div className="flex flex-col md:flex-row items-center justify-between w-full mx-auto mb-40">
@@ -143,7 +151,10 @@ const AboutPage: React.FC = () => {
               <br />
               저장하고 본인만의 앤솔 머신을 업그레이드 시켜 보세요
             </p>
-            <button className="btn btn-active bg-[#A974FF] px-6 py-3.5 text-[white] border-0">
+            <button
+              className="btn btn-active bg-[#A974FF] px-6 py-3.5 text-[white] border-0"
+              onClick={() => router.push("/machine")}
+            >
               Button
             </button>
           </div>
